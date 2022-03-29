@@ -1,0 +1,113 @@
+{
+  "user": [
+    {
+      "username": "admin",
+      "password": "admin",
+      "email": "admin@gmail.com",
+      "createdAt": "20-07-2000",
+      "updatedAt": "20-07-2000",
+      "id": 1
+    },
+    {
+      "username": "admin23",
+      "password": "admina",
+      "email": "admin",
+      "id": 2
+    },
+    {
+      "username": "date",
+      "password": "aweawe",
+      "email": "dere",
+      "createdAt": "18-03-2022 07:59:18",
+      "updatedAt": "18-03-2022 07:59:18",
+      "id": 3
+    },
+    {
+      "username": "ji",
+      "password": "ji",
+      "email": "ji",
+      "createdAt": "21-03-2022 01:24:59",
+      "updatedAt": "21-03-2022 01:24:59",
+      "id": 4
+    },
+    {
+      "username": "tes",
+      "password": "tes",
+      "email": "tes",
+      "createdAt": "21-03-2022 10:39:18",
+      "updatedAt": "21-03-2022 10:39:18",
+      "id": 5
+    }
+  ],
+  "customer": [
+    {
+      "name": "david",
+      "email": "david@gmail.com",
+      "birth": "",
+      "country": "",
+      "createdAt": "20-07-2000",
+      "updatedAt": 1648408887233,
+      "filename": "http://localhost:2000/customerFile/dummies-1648439759797.pdf",
+      "videourl": "http://localhost:2000/customerVideo/videoplayback-1648439782954",
+      "passnum": "12413523526326",
+      "occupation": "Software Developer",
+      "address": "jln cimahi 123",
+      "phone": "0824124124",
+      "status": "Complete",
+      "id": 1
+    },
+    {
+      "name": "david2",
+      "email": "motormurah99@gmail.com",
+      "birth": "",
+      "country": "",
+      "createdAt": 1648064611817,
+      "updatedAt": 1648064611817,
+      "filename": "",
+      "videourl": "",
+      "passnum": "",
+      "occupation": "",
+      "address": "",
+      "phone": "",
+      "status": "Section 1",
+      "id": 2
+    },
+    {
+      "name": "reza",
+      "email": "motormurah99@gmail.com",
+      "birth": "",
+      "country": "",
+      "createdAt": 1648415866226,
+      "updatedAt": 1648415866226,
+      "id": 3,
+      "filename": "http://localhost:2000/customerFile/dummies-1648416003561.pdf",
+      "videourl": "http://localhost:2000/customerVideo/videoplayback-1648397959200-1648416015340"
+    }
+  ],
+  "mail_url": [
+    {
+      "url": "12345234125",
+      "id": 1
+    },
+    {
+      "url": "345775119",
+      "id": 2
+    },
+    {
+      "url": 718183139,
+      "id": 3
+    },
+    {
+      "url": 904841639,
+      "id": 4
+    },
+    {
+      "url": 538543116,
+      "id": 5
+    },
+    {
+      "url": 150592207,
+      "id": 6
+    }
+  ]
+}
