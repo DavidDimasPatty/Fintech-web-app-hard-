@@ -4,7 +4,7 @@ import { useHistory,useParams,Link} from 'react-router-dom';
 import { MDBContainer, MDBRow, MDBCol,
   MDBCard,MDBBtn } from "mdbreact";
   import { Button,Section } from 'react-bulma-components';
-
+  import Tesseract from 'tesseract.js';
 
 import 'bulma/css/bulma.min.css';
 const Mail2 = () => {
@@ -15,12 +15,43 @@ const Mail2 = () => {
   const {username}=useParams();
   const [id, setid]=useState('');
   const [filename,setfilename]=useState('');
+  const [name,setname]=useState('');
 
 
   useEffect(() => {
     checkemail();
     checkid();
   }, []);
+
+  function ocr(imagee){
+    Tesseract.recognize(
+      imagee,
+      'eng',
+      { logger: m => console.log(m) }
+    ).then(({ data: { text } }) => {
+      console.log(text);
+      tex(text);
+    })
+  }
+
+  async function tex(text){
+    const devEnv=process.env.NODE_ENV !== "production";
+    const {REACT_APP_DEV_URL_sendmail ,REACT_APP_PROD_URL} =process.env;
+    await axios.post(`${devEnv  ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}/getname`,{
+        text:text
+      }  
+    )
+    .then((res)=>{ 
+      const fullname=res.data.name[0].name;
+      setname(fullname)
+      console.log(fullname)
+    })
+    .catch((err) => console.log(err));
+    
+}
+  
+
+  
 
   function checkstatus(stat){
     
@@ -56,7 +87,10 @@ const Mail2 = () => {
       setid(respon.data[0].id);
       const stat=respon.data[0].status;
        checkstatus(stat);
-    })
+       setfilename(respon.data[0].filename)
+       console.log("file: "+respon.data[0].filename);
+        ocr(respon.data[0].filename);
+      })
     }
 
     const checkemail=async(e)=>{

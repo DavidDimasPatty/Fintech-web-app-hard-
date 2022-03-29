@@ -2,9 +2,9 @@ const jsonServer = require('json-server');
 jsonServer.create();
 const express= require("express")
 const cors= require('cors')
+var nr = require( 'name-recognition' );
 const path = require('path')
 const multer = require("multer");
-const fs=require('fs')
 const app = express();
 const mailer=require('nodemailer');
 const bodyParser=require('body-parser');
@@ -52,6 +52,12 @@ const uploadVideo = multer({ storage: storageVideo });
 var param3="";
 var param4="";
 
+app.post('/getname',(req,res)=>{
+  const tex=req.body
+  console.log(tex)
+  const namesFound = nr.find( req.body.text );
+  res.json({name:namesFound})
+})
 app.post(`/download2`, uploadVideo.single("video"), (req, res) => {
   console.log(req.body.id)
   param3=req.body.id
@@ -75,7 +81,7 @@ app.post(`/download`, upload.single("file"), (req, res) => {
     param2=finalImageURL
     
     updatepdf()
-     res.json({ image: finalImageURL });
+     res.json({ image: finalImageURL});
 });
 
 const updatepdf = async(e)=>{
@@ -87,6 +93,8 @@ const updatepdf = async(e)=>{
     })
           
 }
+
+
 
 const updatevideo = async(e)=>{
   const devEnv=process.env.NODE_ENV !== "production";

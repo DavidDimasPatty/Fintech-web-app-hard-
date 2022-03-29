@@ -5,6 +5,7 @@ import { MDBContainer, MDBRow, MDBCol,
   MDBCard,MDBBtn } from "mdbreact";
   import { Button,Section } from 'react-bulma-components';
   import moment from "moment";
+  import Tesseract from 'tesseract.js';
 
 
 import 'bulma/css/bulma.min.css';

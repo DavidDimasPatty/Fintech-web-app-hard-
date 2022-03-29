@@ -80,8 +80,9 @@
       "createdAt": 1648415866226,
       "updatedAt": 1648415866226,
       "id": 3,
-      "filename": "http://localhost:2000/customerFile/dummies-1648416003561.pdf",
-      "videourl": "http://localhost:2000/customerVideo/videoplayback-1648397959200-1648416015340"
+      "filename": "http://localhost:2000/customerFile/1*8so5DlYD0kAC3wlxcJH8VQ-1648571210742.png",
+      "videourl": "http://localhost:2000/customerVideo/videoplayback-1648579494177",
+      "status": "Section 2"
     }
   ],
   "mail_url": [
