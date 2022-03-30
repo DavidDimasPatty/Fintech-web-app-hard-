@@ -6,8 +6,8 @@ import { MDBContainer, MDBRow, MDBCol,
   import { Button,Section } from 'react-bulma-components';
   import moment from "moment";
 
-
 import 'bulma/css/bulma.min.css';
+import { nevaehmarie } from 'name-recognition/lib/femaleNames';
 const Mail3 = () => {
   const [birth, setbirth]=useState('');
   const [passportnum, setpassportnum]=useState('');
@@ -16,12 +16,12 @@ const Mail3 = () => {
   const [id, setid]=useState('');
   const [address, setaddress]=useState('');
   const [occupation, setoccupation]=useState('');
-  const history=useHistory();
-  const date_create= moment().format("DD-MM-YYYY hh:mm:ss")
+  const history=useHistory();/* 
+  const date_create= moment().format("DD-MM-YYYY hh:mm:ss") */
   const {url_mail}=useParams();
   const {username}=useParams();
-  const [status, setstatus]=useState('');
-
+  const [videoo,setvideo]=useState('');
+  
   useEffect(() => {
     checkemail();
     checkid();
@@ -74,8 +74,40 @@ const Mail3 = () => {
         setid(respon.data[0].id);
         const stat=respon.data[0].status;
          checkstatus(stat);
+
+        const video=respon.data[0].videourl;
+        setvideo(video,respon.data[0].filename)
+        //getss(video)
+        //getcapture(video)
       })
       }
+
+   /*    async function getcapture(vids){
+        await FFMPEG.process(
+          vids,
+          '-ss 00:00:03 -frames:v 1 ../public/customerPhoto/outputimage.jpeg',
+          function (e) {
+            const video = e.result;
+            console.log(video);
+          }.bind(this)
+        );
+      } */
+
+
+      async function getss(vids){
+       
+        const devEnv=process.env.NODE_ENV !== "production";
+        const {REACT_APP_DEV_URL_sendmail,REACT_APP_PROD_URL} =process.env;
+        await axios.post(`${devEnv  ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}/screenshoot`,{      
+          video:vids,
+          name:username,
+          id:id
+        })
+        .then((res)=>(<div style={'height:100'}></div>))
+        .finally(()=>window.location.href=`/complete/${url_mail}/${username}`)
+       .catch((err) => console.log(err));
+     
+    }
 
     const editCustomer = async (e)=>{
       const devEnv=process.env.NODE_ENV !== "production";
@@ -90,7 +122,8 @@ const Mail3 = () => {
             status:"Complete",
             updatedAt:Date.now()
         })
-        history.push(`/complete/${url_mail}/${username}`)
+        getss(videoo);
+       //window.location.href=`/complete/${url_mail}/${username}`
     }
   return (
     <center>

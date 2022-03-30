@@ -2,12 +2,16 @@ const jsonServer = require('json-server');
 jsonServer.create();
 const express= require("express")
 const cors= require('cors')
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
+const ffmpeg = require('fluent-ffmpeg');
+ffmpeg.setFfmpegPath(ffmpegPath);
 var nr = require( 'name-recognition' );
 const path = require('path')
 const multer = require("multer");
 const app = express();
 const mailer=require('nodemailer');
 const bodyParser=require('body-parser');
+const facecrop = require('opencv-facecrop');
 const { default: axios } = require('axios');
 require('dotenv').config();
 app.use(bodyParser.json());
@@ -52,6 +56,48 @@ const uploadVideo = multer({ storage: storageVideo });
 var param3="";
 var param4="";
 
+var param_ss=""
+var param_ss_id=""
+app.post('/screenshoot',(req,res)=>{
+  const src=req.body.video
+  param_ss_id=req.body.id
+  ffmpeg({ source: src })
+    .on('filenames', (filenames) => {
+        console.log('Created file names', filenames);
+        param_ss=filenames
+        })
+    .on('end', () => {
+      updatescreenshoot();
+      console.log('Job done');
+        }
+      )
+    .on('error', (err) => {
+        console.log('Error', err);
+    })
+    .takeScreenshots({
+        filename: req.body.name,
+        timemarks: [1,2,3,4,5]
+    }, `public/customerPhoto`)
+  
+})
+
+app.post('/facecrop',(req,res)=>{
+const img=req.body.image
+const name=req.body.name
+const id=req.body.id
+ for (let i = 0; i <img.length; i++) {
+  const filename=  req.protocol + "://" + req.get("host") + "/customerPhoto/" + req.body.image[i];
+  console.log(req.protocol + "://" + req.get("host") + "/customerPhoto/" + req.body.image[i]);
+  facecrop(filename, `./public/customerPhoto/${name}_final_${i}.jpg`, "image/jpeg", 1)
+  .catch((error)=>console.log(error))
+ }
+ /* const passport=  req.protocol + "://" + req.get("host") + "/customerFile/" + req.body.filename; 
+ console.log(passport) */
+ facecrop(req.body.filename, `./public/customerPhoto/passport_${name}_final_.jpg`, "image/jpeg", 1)
+  res.json({status:200})  
+}
+)
+
 app.post('/getname',(req,res)=>{
   const tex=req.body
   console.log(tex)
@@ -94,7 +140,13 @@ const updatepdf = async(e)=>{
           
 }
 
-
+const updatescreenshoot = async(e)=>{
+  const devEnv=process.env.NODE_ENV !== "production";
+  const {REACT_APP_DEV_URL,REACT_APP_PROD_URL} =process.env;
+    await axios.patch(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${param_ss_id}`,{         
+        imagearray:param_ss,
+       })          
+}
 
 const updatevideo = async(e)=>{
   const devEnv=process.env.NODE_ENV !== "production";

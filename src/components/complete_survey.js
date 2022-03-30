@@ -11,10 +11,11 @@ import 'bulma/css/bulma.min.css';
 const CompleteSurvey = () => {
     const history=useHistory();
     const [id, setid]=useState('');
+    const [photo, setphoto]=useState([]);
     const {username}=useParams();
   const [status, setstatus]=useState('');
   const {url_mail}=useParams();
-
+  const [passport,setpassport]=useState('');
     useEffect(() => {
         checkemail();
         checkid();
@@ -34,7 +35,9 @@ const CompleteSurvey = () => {
           console.log(respon.data[0].id)
           setid(respon.data[0].id);
           const stat=respon.data[0].status;
-           checkstatus(stat);
+          setphoto(respon.data[0].imagearray);
+          checkstatus(stat);
+          //getface(respon.data[0].imagearray,respon.data[0].filename);
         })
         }
       function checkstatus(stat){
@@ -70,10 +73,23 @@ const CompleteSurvey = () => {
          }).catch((err) => console.log(err));
         }
     
-    
+        async function getface(image,filename){
+       
+          const devEnv=process.env.NODE_ENV !== "production";
+          const {REACT_APP_DEV_URL_sendmail,REACT_APP_PROD_URL} =process.env;
+          await axios.post(`${devEnv  ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}/facecrop`,{      
+            image:image,
+            name:username,
+            id:id,
+            filename:filename
+          }).then((res)=>console.log(res.status))
+          .finally(()=>console.log("done"))
+         .catch((err) => console.log(err));
+       
+      }
   return (
     <center>
-    <MDBContainer size="12" >
+    <MDBContainer size="12">
       <MDBCard className='mt-5 column is-6'>
             Thank you for filling this survey!
     </MDBCard>
