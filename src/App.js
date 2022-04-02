@@ -11,6 +11,7 @@ import Mail2 from "./components/survey2"
 import Mail3 from "./components/survey3"
 import CompleteSurvey from "./components/complete_survey"
 import ValidationSurvey from "./components/validation"
+import OCRPROCESS from "./components/ocrprocess"
 import "./components/app.css"
 
 import { ReactSession } from 'react-client-session';
@@ -68,6 +69,9 @@ function App() {
             </Route>
             <Route exact path="/validation/:url_mail/:username">
                  <ValidationSurvey/>
+            </Route>
+            <Route exact path="/process1/:url_mail/:username">
+                 <OCRPROCESS/>
             </Route>
            </Switch>
       

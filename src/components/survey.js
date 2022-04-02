@@ -56,7 +56,7 @@ const Mail = () => {
       console.log(respon.data[0].id)
       setid(respon.data[0].id);
      const stat=respon.data[0].status;
-      checkstatus(stat);
+     /*  checkstatus(stat); */
     })
     }
 
@@ -85,6 +85,7 @@ const Mail = () => {
       let formData = new FormData();
       formData.append("file", passport);
       formData.append("id",id)
+      formData.append("name",username)
       const devEnv=process.env.NODE_ENV !== "production";
       const {REACT_APP_DEV_URL_sendmail ,REACT_APP_PROD_URL} =process.env;
       e.preventDefault();
@@ -93,7 +94,7 @@ const Mail = () => {
         body: formData,
       })
       .then(
-        history.push(`/mail2/${url_mail}/${username}`))
+        history.push(`/process1/${url_mail}/${username}`))
       .catch((err) => console.log(err));
       }
     } 

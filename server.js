@@ -9,6 +9,7 @@ var nr = require( 'name-recognition' );
 const faceapi=require('face-api.js')
 const path = require('path')
 const fs = require("fs") 
+const { createWorker, createScheduler } = require('tesseract.js');
 const multer = require("multer");
 const app = express();
 const mailer=require('nodemailer');
@@ -20,12 +21,17 @@ const canvas=require('canvas');
 const { idali } = require('name-recognition/lib/femaleNames');
 const { Redirect } = require('react-router-dom');
 require('dotenv').config();
+
+/* EXPRESS CONFIGURATION */
 app.use(bodyParser.json());
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 const PORT = process.env.PORT || 2000;
 const devEnv=process.env.NODE_ENV !== "production";
+/*  */
+
+/* FACE API */
 const {REACT_APP_DEV_URL_sendmail,REACT_APP_PROD_URL} =process.env;
 const MODEL_URL2=`${devEnv  ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}`+'/models/';
 const MODEL_URL = `${__dirname}/public/models/`;
@@ -77,17 +83,15 @@ async function updateprofile(resface,id){
     console.log("done")
          
 }
-
-  
-
 app.post("/validation",async (req,res)=>{
 const image=req.body.image
 const name=req.body.name
 const id=req.body.id
 run(image,name,id)
 })
+/*  */
 
-
+/* MULTER STORE FILE */
 const storageVideo = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./public/customerVideo");
@@ -105,7 +109,7 @@ const storageVideo = multer.diskStorage({
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./public/customerFile");
+    cb(null, "./public/customerPhoto/passport");
   },
   filename: function (req, file, cb) {
     cb(
@@ -148,6 +152,7 @@ app.post('/screenshoot',(req,res)=>{
     }, `public/customerPhoto`)
   
 })
+/*  */
 
 app.post('/facecrop',(req,res)=>{
 const img=req.body.image
@@ -166,12 +171,7 @@ const id=req.body.id
 }
 )
 
-app.post('/getname',(req,res)=>{
-  const tex=req.body
-  console.log(tex)
-  const namesFound = nr.find( req.body.text );
-  res.json({name:namesFound})
-})
+
 app.post(`/download2`, uploadVideo.single("video"), (req, res) => {
   console.log(req.body.id)
   param3=req.body.id
@@ -184,28 +184,29 @@ app.post(`/download2`, uploadVideo.single("video"), (req, res) => {
 });
 
 
-var param1="";
-var param2="";
-app.post(`/download`, upload.single("file"), (req, res) => {
-  console.log(req.body.id)
-  param1=req.body.id
-  
- let finalImageURL =
-    req.protocol + "://" + req.get("host") + "/customerFile/" + req.file.filename;
-    param2=finalImageURL
+app.post(`/download`, upload.single("file"), async (req, res) => {
+  const id=req.body.id
+  const name=req.body.name
+ /* MAKE NEW FOLDER */
+  var dir = `./public/customerPhoto/${name}`;
+    if (!fs.existsSync(dir)){
+        fs.mkdirSync(dir);
+    }
+    /* NAMA FILE PASSPORT */
+    let finalImageURL =
+    req.protocol + "://" + req.get("host") + `/customerPhoto/passport/` + req.file.filename;
     
-    updatepdf()
+    await updatepdf(id,finalImageURL)
      res.json({ image: finalImageURL});
 });
 
-const updatepdf = async(e)=>{
+async function updatepdf(id,image){
   const devEnv=process.env.NODE_ENV !== "production";
   const {REACT_APP_DEV_URL,REACT_APP_PROD_URL} =process.env;
-    await axios.patch(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${param1}`,{         
-        filename:param2,
+    await axios.patch(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${id}`,{         
+        filename:image,
         status:"Section 2"
-    })
-          
+    })          
 }
 
 const updatescreenshoot = async(e)=>{
@@ -226,6 +227,7 @@ const updatevideo = async(e)=>{
           
 }
 
+/* NODE MAILER UNTUK KIRIM EMAIL */
 app.post('/send-mail',(req,res)=>{
    let data=req.body
   let setTransport=mailer.createTransport({
@@ -252,7 +254,37 @@ app.post('/send-mail',(req,res)=>{
   })
   setTransport.close(); 
 })
+/*  */
 
+/* Jalanin OCR */
+app.post('/ocr',(req,res)=>{
+  const image=req.body.image
+  const worker = createWorker();
+  const texter= ( async function() {
+    console.log("Starting OCR")
+    await worker.load();
+    await worker.loadLanguage('eng');
+    await worker.initialize('eng');
+    const { data: { text } } = await worker.recognize(image);
+    await worker.terminate();
+    console.log("done")
+    const namesFound = nr.find(text );
+    console.log("done searching for name")
+    res.json({name:namesFound})
+    })();  
+})
+
+/*  */
+
+/* CARI NAMA DARI TEXT OCR */
+/* function getname(text){
+  const namesFound = nr.find(text );
+  return namesFound;
+}
+/*  */ 
+
+
+/* GABUNGIN EXPRESS SAMA JSON SERVER */
 if (process.env.NODE_ENV === 'production') {
   
   app.use('/api', jsonServer.router('./db.json')) 
@@ -264,8 +296,7 @@ if (process.env.NODE_ENV === 'production') {
   });
   
 }
-
-
+/*  */
 
 
 app.listen(PORT, () => {
