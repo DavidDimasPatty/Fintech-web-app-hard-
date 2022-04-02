@@ -104,7 +104,7 @@ const Mail3 = () => {
           id:id
         })
         .then((res)=>(<div style={'height:100'}></div>))
-        .finally(()=>window.location.href=`/complete/${url_mail}/${username}`)
+        .finally(()=>window.location.href=`/validation/${url_mail}/${username}`)
        .catch((err) => console.log(err));
      
     }

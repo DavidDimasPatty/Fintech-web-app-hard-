@@ -6,19 +6,87 @@ const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
 ffmpeg.setFfmpegPath(ffmpegPath);
 var nr = require( 'name-recognition' );
+const faceapi=require('face-api.js')
 const path = require('path')
+const fs = require("fs") 
 const multer = require("multer");
 const app = express();
 const mailer=require('nodemailer');
 const bodyParser=require('body-parser');
 const facecrop = require('opencv-facecrop');
+//const tf=require('@tensorflow/tfjs-node')
 const { default: axios } = require('axios');
+const canvas=require('canvas');
+const { idali } = require('name-recognition/lib/femaleNames');
+const { Redirect } = require('react-router-dom');
 require('dotenv').config();
 app.use(bodyParser.json());
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 const PORT = process.env.PORT || 2000;
+const devEnv=process.env.NODE_ENV !== "production";
+const {REACT_APP_DEV_URL_sendmail,REACT_APP_PROD_URL} =process.env;
+const MODEL_URL2=`${devEnv  ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}`+'/models/';
+const MODEL_URL = `${__dirname}/public/models/`;
+console.log(MODEL_URL)
+
+const { Canvas, Image, ImageData } = canvas  
+faceapi.env.monkeyPatch({ Canvas, Image, ImageData })
+
+async function run(pass,name,id) {
+  const MODEL_URL2=`${devEnv  ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}`+'/customerPhoto/';
+  const MODEL_URL = `${__dirname}/public/models/`;
+  
+  await faceapi.nets.ssdMobilenetv1.loadFromDisk(MODEL_URL)
+      .then(faceapi.nets.faceLandmark68Net.loadFromDisk(MODEL_URL))
+      .then(faceapi.nets.faceRecognitionNet.loadFromDisk(MODEL_URL))
+  // load weights
+
+  // load the image
+  const img = await canvas.loadImage(MODEL_URL2+`${name}/passport_${name}_final_.jpg`)
+  
+  console.log(MODEL_URL2+`${name}/passport_${name}_final_.jpg`);
+  // detect the faces with landmarks
+  const results = await faceapi.detectSingleFace(img)
+      .withFaceLandmarks().withFaceDescriptor()
+      const faceMatcher = new faceapi.FaceMatcher(results.descriptor);
+      var resface;
+  for(i=1;i<=4;i++){
+    const img2 = await canvas.loadImage(MODEL_URL2+`${name}/${name}_final_${i}.jpg`)
+    const photo = await faceapi.detectSingleFace(img2)
+    .withFaceLandmarks().withFaceDescriptor()
+ 
+    if(photo.descriptor){
+    const bestMatch = faceapi.euclideanDistance(results.descriptor, photo.descriptor)
+   
+    if(parseFloat(bestMatch.toString())<=0.4){
+      resface=MODEL_URL2+`${name}/${name}_final_${i}.jpg`
+    }
+    }
+  }
+  updateprofile(resface,id);
+}
+
+async function updateprofile(resface,id){
+  const devEnv=process.env.NODE_ENV !== "production";
+  const {REACT_APP_DEV_URL,REACT_APP_PROD_URL} =process.env;
+    await axios.patch(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${id}`,{         
+        profile_picture:resface
+    })
+    console.log("done")
+         
+}
+
+  
+
+app.post("/validation",async (req,res)=>{
+const image=req.body.image
+const name=req.body.name
+const id=req.body.id
+run(image,name,id)
+})
+
 
 const storageVideo = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -159,7 +227,7 @@ const updatevideo = async(e)=>{
 }
 
 app.post('/send-mail',(req,res)=>{
-  let data=req.body
+   let data=req.body
   let setTransport=mailer.createTransport({
     service:'Gmail',
     auth:{
@@ -182,7 +250,7 @@ app.post('/send-mail',(req,res)=>{
         res.send('Success')
       }
   })
-  setTransport.close();
+  setTransport.close(); 
 })
 
 if (process.env.NODE_ENV === 'production') {

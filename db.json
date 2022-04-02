@@ -75,25 +75,26 @@
     {
       "name": "reza",
       "email": "motormurah99@gmail.com",
-      "birth": "2022-03-09",
+      "birth": "",
       "country": "",
       "createdAt": 1648415866226,
-      "updatedAt": 1648662492477,
+      "updatedAt": 1648783993072,
       "id": 3,
       "filename": "http://localhost:2000/customerFile/1*8so5DlYD0kAC3wlxcJH8VQ-1648571210742.png",
       "videourl": "http://localhost:2000/customerVideo/how-to-give-a-60-second-self-introduction-presentation_IqZA0A2H-1648662462514.mp4",
       "status": "Complete",
-      "passnum": "2q314124",
-      "occupation": "wrqwrqw",
-      "address": "wewewq",
-      "phone": "adaqwerawe",
+      "passnum": "",
+      "occupation": "",
+      "address": "",
+      "phone": "",
       "imagearray": [
         "reza_1.png",
         "reza_2.png",
         "reza_3.png",
         "reza_4.png",
         "reza_5.png"
-      ]
+      ],
+      "profile_picture": "http://localhost:2000/customerPhoto/reza/reza_final_4.jpg"
     }
   ],
   "mail_url": [

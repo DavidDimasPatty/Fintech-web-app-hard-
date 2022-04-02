@@ -10,6 +10,7 @@ import Mail from "./components/survey"
 import Mail2 from "./components/survey2"
 import Mail3 from "./components/survey3"
 import CompleteSurvey from "./components/complete_survey"
+import ValidationSurvey from "./components/validation"
 import "./components/app.css"
 
 import { ReactSession } from 'react-client-session';
@@ -64,6 +65,9 @@ function App() {
             </Route>
             <Route exact path="/complete/:url_mail/:username">
                  <CompleteSurvey/>
+            </Route>
+            <Route exact path="/validation/:url_mail/:username">
+                 <ValidationSurvey/>
             </Route>
            </Switch>
       
