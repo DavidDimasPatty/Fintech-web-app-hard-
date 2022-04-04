@@ -73,7 +73,7 @@ const Mail3 = () => {
         console.log(respon.data[0].id)
         setid(respon.data[0].id);
         const stat=respon.data[0].status;
-         checkstatus(stat);
+         //checkstatus(stat);
 
         const video=respon.data[0].videourl;
         setvideo(video,respon.data[0].filename)
@@ -94,7 +94,7 @@ const Mail3 = () => {
       } */
 
 
-      async function getss(vids){
+     /*  async function getss(vids){
        
         const devEnv=process.env.NODE_ENV !== "production";
         const {REACT_APP_DEV_URL_sendmail,REACT_APP_PROD_URL} =process.env;
@@ -107,7 +107,7 @@ const Mail3 = () => {
         .finally(()=>window.location.href=`/validation/${url_mail}/${username}`)
        .catch((err) => console.log(err));
      
-    }
+    } */
 
     const editCustomer = async (e)=>{
       const devEnv=process.env.NODE_ENV !== "production";
@@ -121,8 +121,8 @@ const Mail3 = () => {
             phone:phone,
             status:"Complete",
             updatedAt:Date.now()
-        })
-        getss(videoo);
+        }).then((res)=>window.location.href=`/validation/${url_mail}/${username}`)
+       // getss(videoo);
        //window.location.href=`/complete/${url_mail}/${username}`
     }
   return (

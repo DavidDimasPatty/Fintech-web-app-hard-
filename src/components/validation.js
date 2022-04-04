@@ -16,22 +16,9 @@ const ValidationSurvey = () => {
   const [passport,setpassport]=useState('');
     useEffect(() => {
       checkemail();
-      checkstatus();
-      const loadModels = async()=>{
-        const devEnv=process.env.NODE_ENV !== "production";
-        const {REACT_APP_DEV_URL_sendmail,REACT_APP_PROD_URL} =process.env;
-        const MODEL_URL=`${devEnv  ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}`+'/models/';
-        console.log(MODEL_URL)
-        Promise.all([
-          faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL),
-          faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
-          faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
-          faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL)
-        ])
-        .then(checkid())
-      }
-      loadModels();  
-        //checkid();
+      //checkstatus();
+      
+        checkid();
         
       }, []);
        /* function loadImage(pass){
@@ -63,9 +50,13 @@ const ValidationSurvey = () => {
         await axios.post(`${devEnv  ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}/validation`,{
             image:pass,
             name:username,
-            id:id
+            id:id,
+            urlmail:url_mail
            })
-        .finally(()=>history.push(`/complete/${url_mail}/${username}`))
+        .then((res)=>{
+          console.log(res)
+          window.location.href=`/complete/${url_mail}/${username}`
+        })        
       }
 
 
@@ -104,7 +95,7 @@ function loadLabeledImages() {
           const stat=respon.data[0].status;
            const pass=respon.data[0].filename;
             setpassport(pass);
-           checkstatus(stat);
+           //checkstatus(stat);
           loadImage(pass,respon.data[0].id);
           //getface(respon.data[0].imagearray,respon.data[0].filename);
         })

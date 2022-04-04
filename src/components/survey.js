@@ -50,13 +50,15 @@ const Mail = () => {
       params:{
         name:username
       }  
-    
+      
     })
     .then((respon)=>{
       console.log(respon.data[0].id)
       setid(respon.data[0].id);
      const stat=respon.data[0].status;
+      
      /*  checkstatus(stat); */
+    
     })
     }
 
@@ -93,8 +95,8 @@ const Mail = () => {
         method: "POST",
         body: formData,
       })
-      .then(
-        history.push(`/process1/${url_mail}/${username}`))
+      .finally(()=>{
+       window.location.href=`/process1/${url_mail}/${username}`})
       .catch((err) => console.log(err));
       }
     } 

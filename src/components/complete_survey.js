@@ -19,7 +19,7 @@ const CompleteSurvey = () => {
     useEffect(() => {
         checkemail();
         checkid();
-        checkstatus();
+       // checkstatus();
       }, []);
 
       const checkid=async(e)=>{
@@ -36,7 +36,7 @@ const CompleteSurvey = () => {
           setid(respon.data[0].id);
           const stat=respon.data[0].status;
           setphoto(respon.data[0].imagearray);
-          checkstatus(stat);
+          //checkstatus(stat);
           //getface(respon.data[0].imagearray,respon.data[0].filename);
         })
         }
