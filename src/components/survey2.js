@@ -20,9 +20,25 @@ const Mail2 = () => {
   useEffect(() => {
     checkemail();
     checkid();
-    
+    checkvideo();
   }, []);
 
+  const checkvideo=async(e)=>{
+    const devEnv=process.env.NODE_ENV !== "production";
+    const {REACT_APP_DEV_URL,REACT_APP_PROD_URL} =process.env;
+    await axios.get(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer`,{
+      params:{
+        name:username
+      }  
+    }).then((res)=>{
+      
+      if(res.data[0].videourl!=""){   
+        document.getElementById("vid").disabled = true;
+        document.getElementById("btnsubmit").disabled=false;
+      }
+    })
+
+    }
   /* function checkstatus(stat){
     
     if(stat==="Section 2"){
@@ -117,6 +133,8 @@ const Mail2 = () => {
 
     const downloadFile=async(e)=>{
       
+      document.getElementById("vid").disabled = true;
+      document.getElementById("btnsubmit").disabled=false
       let formData = new FormData();
       formData.append("video", passport2);
       formData.append("id",id)
@@ -131,6 +149,8 @@ const Mail2 = () => {
       .then((res)=>{ 
         console.log("done request")
         console.log(res)
+        document.getElementById("vid").disabled = true;
+        document.getElementById("btnsubmit").disabled=false
       })
       .catch((err) => console.log(err));
     

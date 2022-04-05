@@ -22,6 +22,7 @@ const Profile = () => {
     const [address, setaddress]=useState(''); 
     const [phone, setphone]=useState('');  
     const [status, setstatus]=useState('');  
+    const [photo, setphoto]=useState('');
     const {id}=useParams();
    
     const history=useHistory();
@@ -59,7 +60,12 @@ const Profile = () => {
         setaddress(response.data.address); 
         setphone(response.data.phone);  
         setstatus(response.data.status);  
-       
+        if(response.data.profile_picture==""){
+          setphoto("https://www.kindpng.com/picc/m/451-4517876_default-profile-hd-png-download.png")  
+        }
+        else{
+          setphoto(response.data.profile_picture) 
+        }
     }
     const token=ReactSession.get("login");
     console.log(token);
@@ -81,7 +87,7 @@ const Profile = () => {
     <MDBCard className='mt-5 column is-10'>
       <MDBCol>
       <MDBRow className='mb-2'>
-        <center><MDBCol> <img src="https://www.kindpng.com/picc/m/451-4517876_default-profile-hd-png-download.png" width={90} height={100}></img></MDBCol></center>
+        <center><MDBCol> <img src={photo} width={90} height={100}></img></MDBCol></center>
       </MDBRow>
       <MDBRow>
       <center> <MDBCol><h3 className='is-size-2'>{name}</h3></MDBCol></center>

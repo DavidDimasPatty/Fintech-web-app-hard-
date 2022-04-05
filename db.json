@@ -122,17 +122,17 @@
       "email": "motormurah99@gmail.com",
       "birth": "",
       "country": "",
-      "status": "Complete",
+      "status": "Section 2",
       "createdAt": 1649019060763,
-      "updatedAt": 1649027293631,
+      "updatedAt": 1649128660254,
       "id": 6,
-      "filename": "http://localhost:2000/customerPhoto/passport/1*8so5DlYD0kAC3wlxcJH8VQ-1649023849157.png",
-      "videourl": "http://localhost:2000/customerVideo/how-to-give-a-60-second-self-introduction-presentation_IqZA0A2H(1)-1649027139828.mp4",
+      "filename": "http://localhost:2000/customerPhoto/passport/tes-1649129620622.jpg",
+      "videourl": "http://localhost:2000/customerVideo/how-to-give-a-60-second-self-introduction-presentation_IqZA0A2H-1649129257206.mp4",
       "passnum": "",
       "occupation": "",
       "address": "",
       "phone": "",
-      "profile_picture": "http://localhost:2000/customerPhoto/ilham/ilham_final_4.jpg"
+      "profile_picture": "http://localhost:2000/customerPhoto/ilham_4.png"
     }
   ],
   "mail_url": [

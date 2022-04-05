@@ -68,12 +68,12 @@ async function run(pass,name,id,url) {
     console.log("photo matcher")
     
     if(i==4){
-      resface=MODEL_URL2+`${name}/${name}_final_${i}.jpg`
+      resface=MODEL_URL2+`${name}_${i}.png`
       console.log("masuk")
       updateprofile(resface,id,value,url,name);
     }
     if(parseFloat(bestMatch.toString())<=0.4){
-      resface=MODEL_URL2+`${name}/${name}_final_${i}.jpg`
+      resface=MODEL_URL2+`${name}_${i}.png`
       value=bestMatch.toString();
       console.log("photo match")
       updateprofile(resface,id,value,url,name);
@@ -233,25 +233,25 @@ console.log('Start SS')
     //updatescreenshoot();
   const devEnv=process.env.NODE_ENV !== "production";
   const {REACT_APP_DEV_URL,REACT_APP_PROD_URL} =process.env;
-   
+
+  await axios.patch(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${id}`,{         
+    videourl:param4,
+    status:"Section 3"
+})
+
   for (let i = 1; i <=4; i++) {
     try {
+      res.header("Access-Control-Allow-Origin", "*")
+      res.redirect(req.originalUrl);
       const filename=  req.protocol + "://" + req.get("host") + "/customerPhoto/" + `${name}_${i}.png`;
-     await facecrop(filename, `./public/customerPhoto/${name}/${name}_final_${i}.jpg`, "image/jpeg", 1)  
+      await facecrop(filename, `./public/customerPhoto/${name}/${name}_final_${i}.jpg`, "image/jpeg", 1)  
+      
     } catch (error) {
       console.log("Faces Not Found")      
     }
-
-  
   }
-  
-  await axios.patch(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${id}`,{         
-        videourl:param4,
-        status:"Section 3"
-    })
 
-    res.header("Access-Control-Allow-Origin", "*")
-    res.send({job:"done"});     
+  
     }
       )
     .on('error', (err) => {
@@ -362,8 +362,9 @@ app.post('/ocr',(req,res)=>{
     await worker.initialize('eng');
     const { data: { text } } = await worker.recognize(image);
     await worker.terminate();
-    console.log("done")
+    console.log("teks "+text)
     const namesFound = nr.find(text );
+    console.log(namesFound)
     console.log("done searching for name")
     res.header("Access-Control-Allow-Origin", "*")
     console.log('Job done');

@@ -120,7 +120,7 @@ const Mail = () => {
     <MDBRow>
       <MDBCol><input onChange={handleUploadChange}
                       type="file"
-                      accept="application/pdf"
+                      accept="image/png, image/gif, image/jpeg"
                      /></MDBCol>
     </MDBRow>
    

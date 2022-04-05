@@ -40,9 +40,11 @@ const OCRPROCESS = () => {
           }  
         )
         .then((res)=>{ 
-          ReactSession.set("name", res.data.name[0].name);
-          console.log("done request")
           console.log(res)
+          if(res.data.name.length!=0){
+            console.log(res.data.name[0].name)
+          ReactSession.set("name", res.data.name[0].name)}
+          ;
           window.location.href=`/mail2/${url_mail}/${username}`
         })
         .catch((err) => console.log(err));    
