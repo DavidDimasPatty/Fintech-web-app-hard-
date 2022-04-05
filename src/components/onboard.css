@@ -1,10 +1,8 @@
-.containers{
-    display: flex;
-    flex-direction: row;
+.customerForm{
+    min-width: 300px;
+    overflow: hidden;
+    border: 1px solid;
+    border-color: #F0F0F0;
+    border-radius: 5px;
+    box-shadow: 1px 8px 8px 0px #F0F0F0;
 }
-
-    .cards{
-
-        font-size: medium !important;
-        text-decoration: none;
-    }

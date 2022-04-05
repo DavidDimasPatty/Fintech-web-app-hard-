@@ -1,10 +1,45 @@
 .containers{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
-
-    .cards{
-
-        font-size: medium !important;
-        text-decoration: none;
-    }
+.cards{
+    font-size: medium !important;
+    text-decoration: none;
+}
+.customerCard{
+    min-width: 180px;
+    max-width: 180px;
+    min-height: 370px;
+    overflow: hidden;
+    border: 1px solid;
+    border-color: #F0F0F0;
+    border-radius: 5px;
+    box-shadow: 1px 8px 8px 0px #F0F0F0;
+}
+.cardImage{
+    max-width: 180px;
+    background-color: #F5F5F5;
+}
+.cardInfo{
+    margin-top: 10px;
+    padding: 0px 5px 0px 5px;
+}
+.cardLabel{
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.cardLabel:nth-of-type(3){
+    margin-top: 10px;
+}
+.cardButton{
+    margin: 20px 0px 10px 0px;
+    text-align: center;
+}
+#success{
+    color: #48c78e;
+}
+#reject{
+    color: #f14668;
+}

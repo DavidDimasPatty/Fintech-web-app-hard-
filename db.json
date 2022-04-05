@@ -133,6 +133,16 @@
       "address": "",
       "phone": "",
       "profile_picture": "http://localhost:2000/customerPhoto/ilham_4.png"
+    },
+    {
+      "name": "tambah",
+      "email": "tambah@gmail.com",
+      "birth": "",
+      "country": "",
+      "status": "Section 1",
+      "createdAt": 1649166795393,
+      "updatedAt": 1649166795393,
+      "id": 7
     }
   ],
   "mail_url": [
@@ -171,6 +181,10 @@
     {
       "url": 368079692,
       "id": 9
+    },
+    {
+      "url": 695020978,
+      "id": 10
     }
   ]
 }

@@ -1,0 +1,8 @@
+REACT_APP_DEV_URL = "http://localhost:5000"
+REACT_APP_DEV_URL_sendmail = "http://localhost:2000"
+REACT_APP_DEV_URL_mail = "http://localhost:3000/mail"
+REACT_APP_PROD_URL = "https://fintech-webapp-easy.herokuapp.com/api"
+REACT_APP_PROD_URL_mail = "https://fintech-webapp-easy.herokuapp.com/mail"
+username_email = "YOUR_USERNAME"
+password_email = "YOUR_EMAIL"
+token_fr = "YOUR_TOKEN"
