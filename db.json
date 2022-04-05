@@ -53,7 +53,7 @@
       "occupation": "Software Developer",
       "address": "jln cimahi 123",
       "phone": "0824124124",
-      "status": "Complete",
+      "status": "Reject",
       "id": 1
     },
     {
@@ -82,7 +82,7 @@
       "id": 3,
       "filename": "http://localhost:2000/customerPhoto/passport/1*8so5DlYD0kAC3wlxcJH8VQ-1648923231496.png",
       "videourl": "http://localhost:2000/customerVideo/how-to-give-a-60-second-self-introduction-presentation_IqZA0A2H-1648662462514.mp4",
-      "status": "Section 2",
+      "status": "Reject",
       "passnum": "",
       "occupation": "",
       "address": "",

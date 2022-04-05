@@ -40,8 +40,26 @@ const Profile = () => {
     }
     
     
-  
+   const accept = async ()=>{
+    const devEnv=process.env.NODE_ENV !== "production";
+    const {REACT_APP_DEV_URL,REACT_APP_PROD_URL} =process.env;
+        const response= await axios.patch(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${id}`,{
+            status:"Accept"
+        }).then((res)=>{
+          window.location.href=`/customers/${id}`
+        })  
+   }
     
+   const reject = async ()=>{
+    const devEnv=process.env.NODE_ENV !== "production";
+    const {REACT_APP_DEV_URL,REACT_APP_PROD_URL} =process.env;
+        const response= await axios.patch(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${id}`,{
+            status:"Reject"
+        }).then((res)=>{
+          window.location.href=`/customers/${id}`
+        })  
+   
+  }
 
     const getProfile = async ()=>{
     const devEnv=process.env.NODE_ENV !== "production";
@@ -141,6 +159,19 @@ const Profile = () => {
       <Button color="info  is-small"  onClick={() => { download(video) }}>Download Video</Button>
       </MDBCol>
       </MDBRow>
+        
+      </center>
+       <center>
+      <MDBRow>
+      
+
+      <MDBCol className='mt-2'> 
+      <Button color="success  is-small mr-2"  onClick={() => { accept() }}>Accept</Button>
+     
+      <Button color="danger  is-small"  onClick={() => { reject() }}>Reject</Button>
+      </MDBCol>
+      </MDBRow>
+        
       </center>
       </MDBCard>
       
