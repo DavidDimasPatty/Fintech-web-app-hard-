@@ -37,10 +37,8 @@ const {REACT_APP_DEV_URL_sendmail,REACT_APP_PROD_URL} =process.env;
 const MODEL_URL2=`${devEnv  ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}`+'/models/';
 const MODEL_URL = `${__dirname}/public/models/`;
 console.log(MODEL_URL)
-
 const { Canvas, Image, ImageData } = canvas  
 faceapi.env.monkeyPatch({ Canvas, Image, ImageData })
-
 async function run(pass,name,id,url) {
   const MODEL_URL2=`${devEnv  ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}`+'/customerPhoto/';
   const MODEL_URL = `${__dirname}/public/models/`;
@@ -83,7 +81,6 @@ async function run(pass,name,id,url) {
   }
   
 }
-
 async function updateprofile(resface,id,value,url,name){
   const {REACT_APP_DEV_URL,REACT_APP_PROD_URL,REACT_APP_DEV_URL_redirect,REACT_APP_PROD_URL_redirect} =process.env;
   await axios.patch(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${id}`,{         
@@ -93,8 +90,6 @@ async function updateprofile(resface,id,value,url,name){
     console.log("done")
         
 }
-
-
 app.post("/validation",async (req,res)=>{
 const image=req.body.image
 const name=req.body.name
@@ -104,7 +99,6 @@ await run(image,name,id,url)
 const {REACT_APP_DEV_URL,REACT_APP_PROD_URL,REACT_APP_DEV_URL_redirect,REACT_APP_PROD_URL_redirect} =process.env;
 res.header("Access-Control-Allow-Origin", "*");
 res.send({job:"done"})
-
 })
 /*  */
 
@@ -137,7 +131,7 @@ const storageVideo = multer.diskStorage({
   filename: function (req, file, cb) {
     cb(
       null,
-      path.parse(file.originalname).name +
+      path.parse(file.originalname.replace(/ /g,"_")).name +
         "-" +
         Date.now() +
         path.extname(file.originalname)
@@ -152,16 +146,16 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     cb(
       null,
-      path.parse(file.originalname).name +
+      path.parse(file.originalname.replace(/ /g,"_")).name +
         "-" +
         Date.now() +
         path.extname(file.originalname)
     );
   },
 });
-
 const upload = multer({ storage: storage });
 const uploadVideo = multer({ storage: storageVideo });
+/*  */
 
 var param3="";
 var param4="";
@@ -360,15 +354,19 @@ app.post('/ocr',(req,res)=>{
     await worker.load();
     await worker.loadLanguage('eng');
     await worker.initialize('eng');
-    const { data: { text } } = await worker.recognize(image);
-    await worker.terminate();
-    console.log("teks "+text)
-    const namesFound = nr.find(text );
-    console.log(namesFound)
-    console.log("done searching for name")
-    res.header("Access-Control-Allow-Origin", "*")
-    console.log('Job done');
-    res.send({name:namesFound})
+    try {
+      const { data: { text } } = await worker.recognize(`${image}`);
+      await worker.terminate();
+      console.log("teks "+text)
+      const namesFound = nr.find(text );
+      console.log(namesFound)
+      console.log("done searching for name")
+      res.header("Access-Control-Allow-Origin", "*")
+      console.log('Job done');
+      res.send({name:namesFound})
+    } catch (error) {
+     console.log(error) 
+    }
     })();  
 })
 
