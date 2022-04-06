@@ -108,7 +108,7 @@ const Profile = () => {
           <div className="profileInfo">
             <div className="is-size-4">Name</div>
             <span className="is-size-4">:</span>
-            <div className="is-size-4">{(name === "" || name == null) ? "-" : name}</div>
+            <div className="is-size-4">{(name === "" || name == null) ? "-" : name.replace('_', ' ')}</div>
           </div>
           <div className="profileInfo">
             <div className="is-size-4">Email</div>

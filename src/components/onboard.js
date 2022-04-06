@@ -64,7 +64,7 @@ const Onboard = () => {
     const {REACT_APP_PROD_URL, REACT_APP_DEV_URL} = process.env;
 
     await axios.post(`${devEnv ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer`, {
-      name: username,
+      name: username.replace(' ', '_'),
       email: email,
       birth: "",
       country: "",
@@ -129,7 +129,7 @@ const Onboard = () => {
       <div className="customerForm mt-5 column is-10">
         <div className="mb-2">
           <div className="is-size-3 mb-5">Customer Form</div>
-          <div className="mt-2">Username</div>
+          <div className="mt-2">Name</div>
           <input className="input is-info is-small column is-8" type="text" placeholder="username" value={username} onChange={(e) => setusername(e.target.value)}></input>
           <div className="mt-2">Email</div>
           <input className="input is-info is-small column is-8" type="email" placeholder="email" value={email} onChange={(e) => setemail(e.target.value)}></input>
