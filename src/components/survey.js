@@ -31,6 +31,7 @@ const Mail = () => {
   
   function handleUploadChange(e) {
     let uploaded = e.target.files[0];
+    console.log(uploaded)
     setpassport(URL.createObjectURL(uploaded))
     // console.log(passport2);
     setSavepassport(uploaded);
@@ -68,6 +69,7 @@ const Mail = () => {
     }).catch((err) => console.log(err));
   }
   const downloadFile = async(e) => {
+    console.log("masuk")
     if(passport) {
       let formData = new FormData();
       formData.append("file", passport);
@@ -75,7 +77,8 @@ const Mail = () => {
       formData.append("name", username)
       const devEnv=process.env.NODE_ENV !== "production";
       const {REACT_APP_DEV_URL_sendmail, REACT_APP_PROD_URL} = process.env;
-      e.preventDefault();
+      
+      console.log("masuk")
       fetch(`${devEnv ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}/download`, {
         method: "POST",
         body: formData,
@@ -84,9 +87,6 @@ const Mail = () => {
         window.location.href=`/process1/${url_mail}/${username}`
       })
       .catch((err) => console.log(err));
-    }
-    else{
-      window.alert("File input can't be empty")
     }
   }
     

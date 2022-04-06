@@ -40,6 +40,7 @@ const OCRPROCESS = () => {
       image:image
     })
     .then((res) => {
+      ReactSession.set("upload","")
        console.log(res);
       if(res.data.name.length != 0) {
         ReactSession.set("name", res.data.name[0].name)

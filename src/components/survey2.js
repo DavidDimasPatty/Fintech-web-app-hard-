@@ -3,6 +3,7 @@ import {useHistory, useParams} from "react-router-dom";
 import axios from "axios";
 import "bulma/css/bulma.min.css";
 import "./survey.css";
+import {ReactSession} from "react-client-session";
 
 const Mail2 = () => {
   var [passport2, setpassport] = useState(null);
@@ -13,8 +14,13 @@ const Mail2 = () => {
   const [id, setid] = useState("");
   const [filename, setfilename] = useState("");
   const [name, setname] = useState("");
-  
+    var tokenup=ReactSession.get("upload")
   useEffect(() => {
+  
+    if(tokenup==true){
+    document.getElementById("vid").disabled = true;
+    document.getElementById("btnsubmit").disabled = false
+  }
     checkemail();
     checkid();
     checkvideo();
@@ -59,23 +65,7 @@ const Mail2 = () => {
     // setSavepassport(uploaded);
   }
   
-  const faceCrop = async(e) => {
-    if(passport2) {
-      let formData = new FormData();
-      formData.append("file", passport2);
-      formData.append("id", id)
-      formData.append("name", username)
-      const devEnv = process.env.NODE_ENV !== "production";
-      const {REACT_APP_DEV_URL_sendmail, REACT_APP_PROD_URL} = process.env;
-      e.preventDefault();
-      fetch(`${devEnv ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}/screenshoot`, {
-        method: "POST",
-        body: formData,
-      })
-      .then(history.push(`/process1/${url_mail}/${username}`))
-      .catch((err) => console.log(err));
-    }
-  }
+  
   
   const checkid = async(e) => {
     const devEnv = process.env.NODE_ENV !== "production";
@@ -92,7 +82,9 @@ const Mail2 = () => {
       // checkstatus(stat);
       passport2=respon.data[0].videourl
       // console.log(passport2);
-      if(passport2 !== "") {
+      
+   
+      if(tokenup!== "") {
         document.getElementById("vid").disabled = true;
         document.getElementById("btnsubmit").disabled = false
       }
@@ -120,6 +112,8 @@ const Mail2 = () => {
   }
   
   const downloadFile = async(e) => {
+    
+    ReactSession.set("upload",true)
     document.getElementById("vid").disabled = true;
     document.getElementById("btnsubmit").disabled = false
     let formData = new FormData();
@@ -141,6 +135,7 @@ const Mail2 = () => {
     .catch((err) => console.log(err));
   }
   
+  
   return (
     <center>
       <div className="surveyContainer mt-5 column is-6">
@@ -151,6 +146,8 @@ const Mail2 = () => {
       </div>
     </center>
   )
+
+  
 }
 
 export default Mail2;
