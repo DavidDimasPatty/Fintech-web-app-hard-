@@ -4,6 +4,7 @@ import axios from "axios";
 import moment from "moment";
 import "bulma/css/bulma.min.css";
 import "./onboard.css";
+import {ReactSession} from "react-client-session";
 
 const Onboard = () => {
 
@@ -11,10 +12,10 @@ const Onboard = () => {
   const [email, setemail] = useState("");
   const history = useHistory();
   const date_create = moment().format("DD-MM-YYYY hh:mm:ss");
+  const randomUrl = Math.floor(100000000 + Math.random() * 900000000);
   
   const saveUrl = async(e) => {
 
-    const randomUrl = Math.floor(100000000 + Math.random() * 900000000);
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_PROD_URL, REACT_APP_DEV_URL} = process.env;
 
@@ -26,7 +27,13 @@ const Onboard = () => {
 
 
   }
-
+  const token = ReactSession.get("login");
+  if(token != "true") {
+    history.push("/");
+    return(
+      <div style={"height:100"}></div>
+    );
+  }
   const validate = async (e) => {
 
     const devEnv = process.env.NODE_ENV !== "production";
