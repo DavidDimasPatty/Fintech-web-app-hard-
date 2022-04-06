@@ -23,18 +23,16 @@ const AddUser = () => {
         username:username
       }
     }).then((respon) => {
-      // console.log(respon.data);
+      console.log(respon.data);
       if(respon.data.length === 0) {
         if(username.length > 0) {
           if(password.length > 0 ) {
             if(email.length > 0) {
-              for(let i = 0; i>email.length; i++){
-                if(email.charAt[i] == "@"){
-                  saveUser();
-                }
-                else{
-                  i++
-                }
+              if(email.includes("@")) {
+                saveUser();
+              }
+              else {
+                window.alert("Email must have '@'");
               }
             }
             else{
@@ -81,7 +79,7 @@ const AddUser = () => {
 
         <div className="signupTitle">Sign Up</div>
         
-        <form>
+        
 
           <div className="signupLabel">Username</div>
           <div className="signupInput"><input type="text" onChange={e => setusername(e.target.value)} placeholder="username" spellCheck="false" required/></div>
@@ -92,9 +90,9 @@ const AddUser = () => {
           <div className="signupLabel">Password</div>
           <div className="signupInput"><input type="password" onChange={e => setpassword(e.target.value)} placeholder="password" required/></div>
           
-          <input type="submit" className="signupButton" onClick={validate} value="Sign Up"/>
+          <input className="signupButton" onClick={validate} value="Sign Up"/>
 
-        </form>
+        
         
       </div>
     
