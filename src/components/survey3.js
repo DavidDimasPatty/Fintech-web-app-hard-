@@ -29,9 +29,7 @@ const Mail3 = () => {
     if(date==undefined||date==""){
       setbirth(date);
     }
-    if(date==undefined||date==""){
-      birth=date;
-    }
+   
     checkemail();
     checkid();
   }, []);
@@ -83,30 +81,6 @@ const Mail3 = () => {
       // getcapture(video)
     })
   }
-  
-  /* async function getcapture(vids) {
-    await FFMPEG.process(
-      vids,
-      '-ss 00:00:03 -frames:v 1 ../public/customerPhoto/outputimage.jpeg',
-      function (e) {
-        const video = e.result;
-        console.log(video);
-      }.bind(this)
-    );
-  } */
-  
-  /* async function getss(vids) {
-    const devEnv = process.env.NODE_ENV !== "production";
-    const {REACT_APP_DEV_URL_sendmail, REACT_APP_PROD_URL} = process.env;
-    await axios.post(`${devEnv ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}/screenshoot`, {
-      video:vids,
-      name:username,
-      id:id
-    })
-    .then((res) => (<div style={"height:100"}></div>))
-    .finally(() => window.location.href=`/validation/${url_mail}/${username}`)
-    .catch((err) => console.log(err));
-  } */
   
   const editCustomer = async (e) => {
     const devEnv = process.env.NODE_ENV !== "production";
