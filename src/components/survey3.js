@@ -24,10 +24,10 @@ const Mail3 = () => {
   console.log(name+" "+country+" "+date)
   useEffect(() => {
     if(country==undefined||country==""){
-      setregion(country);
+     
     }
     if(date==undefined||date==""){
-      setbirth(date);
+      
     }
    
     checkemail();
@@ -104,7 +104,7 @@ const Mail3 = () => {
       <div className="surveyContainer mt-5 column is-6">
         <div className="is-size-2 mb-4">Form</div>
         <div className="mt-2">Date of Birth</div>
-        <input className="input is-info is-small column is-6" type="date" max={Date.now()} placeholder="username" value={(date !== undefined || date !== "") ? date.substring(0, 10) : birth} onChange={(e) => setbirth(e.target.value)}/>
+        <input className="input is-info is-small column is-6" type="date" max={Date.now()} placeholder="username" value={(date !== undefined) ? date.substring(0, 10) : birth} onChange={(e) => setbirth(e.target.value)}/>
         <div className="mt-2">Passport Number</div>
         <input className="input is-info is-small column is-6" type="text" placeholder="passport number" value={passportnum} onChange={(e) => setpassportnum(e.target.value)}/>
         <div className="mt-2">Nationality Country of Residence</div>
@@ -357,7 +357,7 @@ const Mail3 = () => {
           <option value="Zimbabwe">Zimbabwe</option>
         </select>
         <div className="mt-2">Phone Number</div>
-        <input className="input is-info is-small column is-6" type="tel" placeholder="password" value={phone} onChange={(e) => setphone(e.target.value)}/>
+        <input className="input is-info is-small column is-6" type="tel" placeholder="phone number" value={phone} onChange={(e) => setphone(e.target.value)}/>
         <div className="mt-2">Address</div>
         <input className="input is-info is-small column is-6" type="text" placeholder="address" value={address} onChange={(e) => setaddress(e.target.value)}/>
         <div className="mt-2">Occupation</div>
