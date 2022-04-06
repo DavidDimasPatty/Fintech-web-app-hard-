@@ -3,6 +3,7 @@ import {useHistory, useParams} from "react-router-dom";
 import axios from "axios";
 import "bulma/css/bulma.min.css";
 import "./survey.css";
+import {ReactSession} from "react-client-session";
 
 const Mail3 = () => {
   const [birth, setbirth] = useState("");
@@ -17,8 +18,20 @@ const Mail3 = () => {
   const {url_mail} = useParams();
   const {username} = useParams();
   const [videoo, setvideo] = useState("");
-  
+  var name = ReactSession.get("name");
+  var country = ReactSession.get("country");
+  var date = ReactSession.get("birthdate");
+  console.log(name+" "+country+" "+date)
   useEffect(() => {
+    if(country==undefined||country==""){
+      setregion(country);
+    }
+    if(date==undefined||date==""){
+      setbirth(date);
+    }
+    if(date==undefined||date==""){
+      birth=date;
+    }
     checkemail();
     checkid();
   }, []);
@@ -117,11 +130,11 @@ const Mail3 = () => {
       <div className="surveyContainer mt-5 column is-6">
         <div className="is-size-2 mb-4">Form</div>
         <div className="mt-2">Date of Birth</div>
-        <input className="input is-info is-small column is-6" type="date" max={Date.now()} placeholder="username" value={birth} onChange={(e) => setbirth(e.target.value)}/>
+        <input className="input is-info is-small column is-6" type="date" max={Date.now()} placeholder="username" value={(date !== undefined || date !== "") ? date.substring(0, 10) : birth} onChange={(e) => setbirth(e.target.value)}/>
         <div className="mt-2">Passport Number</div>
         <input className="input is-info is-small column is-6" type="text" placeholder="passport number" value={passportnum} onChange={(e) => setpassportnum(e.target.value)}/>
         <div className="mt-2">Nationality Country of Residence</div>
-        <select className="select is-info" type="select" value={region} onChange={(e) => setregion(e.target.value)}>
+        <select className="select is-info" type="select" value={(country !== undefined || country !== "") ? country : region} onChange={(e) => setregion(e.target.value)}>
           <option value="Afganistan">Afghanistan</option>
           <option value="Albania">Albania</option>
           <option value="Algeria">Algeria</option>

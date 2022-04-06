@@ -40,32 +40,21 @@ const OCRPROCESS = () => {
       image:image
     })
     .then((res) => {
-      // console.log(res);
+       console.log(res);
       if(res.data.name.length != 0) {
-        // console.log(res.data.name[0].name);
         ReactSession.set("name", res.data.name[0].name)
+      }
+      if(res.data.country.length != 0) {
+        ReactSession.set("country", res.data.country[0].name)
+      }
+      if(res.data.date.length != 0) {
+        ReactSession.set("birthdate", res.data.date[0].date)
       }
       window.location.href=`/mail2/${url_mail}/${username}`
     })
     .catch((err) => console.log(err));
   }
-  
-  async function tex(e, text) {
-    const devEnv = process.env.NODE_ENV !== "production";
-    const {REACT_APP_DEV_URL_sendmail, REACT_APP_PROD_URL} = process.env;
-    e.preventDefault();
-    await axios.post(`${devEnv ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}/getname`, {
-      text:text
-    })
-    .then((res) => {
-      const fullname = res.data.name[0].name;
-      setname(fullname)
-      // console.log(fullname);
-      // history.push(`/mail2/${url_mail}/${username}`)
-    })
-    .catch((err) => console.log(err));
-  }
-  
+   
   const checkid = async(e) => {
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_DEV_URL, REACT_APP_PROD_URL} = process.env;

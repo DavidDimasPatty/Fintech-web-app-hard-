@@ -85,6 +85,9 @@ const Mail = () => {
       })
       .catch((err) => console.log(err));
     }
+    else{
+      window.alert("File input can't be empty")
+    }
   }
     
   return (
