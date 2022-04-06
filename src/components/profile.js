@@ -38,7 +38,7 @@ const Profile = () => {
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_DEV_URL, REACT_APP_PROD_URL} = process.env;
     const response = await axios.patch(`${devEnv ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${id}`, {
-      status:"Accept"
+      status:"Onboarded"
     }).then((res) => {
       window.location.href=`/customers/${id}`
     })
@@ -48,7 +48,7 @@ const Profile = () => {
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_DEV_URL, REACT_APP_PROD_URL} = process.env;
     const response = await axios.patch(`${devEnv ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${id}`, {
-      status:"Reject"
+      status:"Rejected"
     }).then((res) => {
       window.location.href=`/customers/${id}`
     })
@@ -148,15 +148,15 @@ const Profile = () => {
           <div className="profileInfo">
             <div className="is-size-4">Status</div>
             <span className="is-size-4">:</span>
-            <div className="is-size-4" id={(status === "Reject") ? "reject" : "success"}>{(status === "" || status == null) ? "-" : status}</div>
+            <div className={(status === "Rejected") ? "fail is-size-4" : "success is-size-4"} id={(status === "Pending") ? "pending" : ""}>{(status === "" || status == null) ? "-" : status}</div>
           </div>
           <div className="is-size-3 mt-5">Passport PDF :</div>
-          <button color="info is-small" onClick={() => { download(filename) }}>Download Passport</button>
+          <button color="info is-small" onClick={() => { download(filename) }} id={(filename === "" || filename == null) ? "disable" : ""}>Download Passport</button>
           <div className="is-size-3 mt-5">Video 5 sec of customer :</div>
-          <button className="mb-5" color="info is-small" onClick={() => { download(video) }}>Download Video</button>
+          <button className="mb-5" color="info is-small" onClick={() => { download(video) }} id={(video === "" || filename == null) ? "disable" : ""}>Download Video</button>
           <div className="profileInfo">
-            <button onClick={() => { accept() }}>Accept</button>
-            <button onClick={() => { reject() }}>Reject</button>
+            <button onClick={() => { accept() }} id={(status === "Pending") ? "disable" : ""}>Accept</button>
+            <button onClick={() => { reject() }} id={(status === "Pending") ? "disable" : ""}>Reject</button>
           </div>
         </center>
         

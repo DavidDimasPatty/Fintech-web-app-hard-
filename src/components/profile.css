@@ -51,9 +51,17 @@ button:hover{
     margin-left: 40px;
     background-color: #f14668;
 }
-#success{
-    color: #48c78e;
+.success{
+    color: #3e8ed0;
 }
-#reject{
+.fail{
     color: #f14668;
+}
+#pending{
+    color: #ffc107;
+}
+#disable{
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: darkgray;
 }

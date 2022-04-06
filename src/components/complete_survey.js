@@ -3,6 +3,7 @@ import {useHistory, useParams} from "react-router-dom";
 import axios from "axios";
 import {MDBContainer, MDBCard} from "mdbreact";
 import "bulma/css/bulma.min.css";
+import "./survey.css";
 
 const CompleteSurvey = () => {
   const history = useHistory();
@@ -80,11 +81,9 @@ const CompleteSurvey = () => {
   
   return (
     <center>
-      <MDBContainer>
-        <MDBCard className="mt-5 column is-6">
-          Thank you for filling this survey!
-        </MDBCard>
-      </MDBContainer>
+      <div className="surveyContainer column is-6">
+        <div className="is-size-3 mb-5">Thank you for filling this survey!</div>
+      </div>
     </center>
   )
 }

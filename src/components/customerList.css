@@ -18,8 +18,14 @@
     box-shadow: 1px 8px 8px 0px #F0F0F0;
 }
 .cardImage{
+    height: 180px;
     max-width: 180px;
     background-color: #F5F5F5;
+}
+#photo{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 .cardInfo{
     margin-top: 10px;
@@ -37,9 +43,12 @@
     margin: 20px 0px 10px 0px;
     text-align: center;
 }
-#success{
-    color: #48c78e;
+.success{
+    color: #3e8ed0;
 }
-#reject{
+.fail{
     color: #f14668;
+}
+#pending{
+    color: #ffc107;
 }

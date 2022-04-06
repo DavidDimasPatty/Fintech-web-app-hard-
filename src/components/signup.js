@@ -90,7 +90,7 @@ const AddUser = () => {
           <div className="signupLabel">Password</div>
           <div className="signupInput"><input type="password" onChange={e => setpassword(e.target.value)} placeholder="password" required/></div>
           
-          <input className="signupButton" onClick={validate} value="Sign Up"/>
+          <input type="submit" className="signupButton" onClick={validate} value="Sign Up"/>
 
         
         
