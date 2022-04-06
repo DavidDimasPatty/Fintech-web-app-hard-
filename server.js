@@ -1,28 +1,72 @@
-const jsonServer = require("json-server");
+/* PACKAGE YANG DIGUNAKAN DAN PENJELASANYA */
+/* db di server */
+const jsonServer = require("json-server"); 
 jsonServer.create();
+/*  */
+/* Server untuk request ke api */
 const express = require("express");
-const cors = require("cors");
-const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
-const ffmpeg = require("fluent-ffmpeg");
-ffmpeg.setFfmpegPath(ffmpegPath);
-var nr = require("name-recognition");
-var dateFinder = require("datefinder");
-var countryFinder = require("country-in-text-detector");
-const faceapi = require("face-api.js");
-const path = require("path");
-const fs = require("fs");
-const { createWorker, createScheduler } = require("tesseract.js");
-const multer = require("multer");
 const app = express();
-const mailer = require("nodemailer");
-const bodyParser = require("body-parser");
-const facecrop = require("opencv-facecrop");
-// const tf = require("@tensorflow/tfjs-node");
-const { default: axios } = require("axios");
-const canvas = require("canvas");
+/*  */
+/* package untuk bisa cors ke semua url */
+const cors = require("cors");
+/*  */
+/* package untuk Screen shoot */
+const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
+const ffmpeg = require("fluent-ffmpeg"); 
+ffmpeg.setFfmpegPath(ffmpegPath);
+/*  */
+/* package untuk recognize nama dari string */
+var nr = require("name-recognition");
 const { idali } = require("name-recognition/lib/femaleNames");
+/*  */
+/* package untuk recognize date dari string */
+var dateFinder = require("datefinder");
+/*  */
+/* package untuk recognize negara dari string */
+var countryFinder = require("country-in-text-detector");
+/*  */
+/* package untuk samain muka di video dan passport */
+const faceapi = require("face-api.js");
+/*  */
+/* package untuk express bisa join sama db */
+const path = require("path");
+/*  */
+/* package buat baca file dan read file */
+const fs = require("fs");
+/*  */
+/* package untuk ocr */
+const { createWorker, createScheduler } = require("tesseract.js");
+/*  */
+/* package untuk save file ke server/local */
+const multer = require("multer");
+/*  */
+/* package untuk ngirim email */
+const mailer = require("nodemailer");
+/*  */
+/* package untuk parser json */
+const bodyParser = require("body-parser");
+/*  */
+/* package untuk crop muka dari screen shoot */
+const facecrop = require("opencv-facecrop");
+/*  */
+/* package untuk mempercepat proses face-api js */
+// const tf = require("@tensorflow/tfjs-node");
+/*  */
+/* package untuk request */
+const { default: axios } = require("axios");
+/*  */
+/* package untuk face api untuk membuat gambar dari server jadi canvas */
+const canvas = require("canvas");
+/*  */
+/* package agar bisa redirect dari backend */
 const { Redirect } = require("react-router-dom");
+/*  */
+/* package untuk membaca file .env */
 require("dotenv").config();
+/*  */
+
+/*  */
+
 
 /* EXPRESS CONFIGURATION */
 app.use(bodyParser.json());
@@ -44,6 +88,7 @@ async function run(pass,name,id,url) {
   const MODEL_URL = `${__dirname}/public/models/`;
   const {REACT_APP_DEV_URL,REACT_APP_PROD_URL,REACT_APP_DEV_URL_redirect,REACT_APP_PROD_URL_redirect} =process.env;
   console.log("load model loading")
+  /* PENTING!!! MODEL INI DIGUNAKAN UNTUK PROCESS FACE API  */
   await faceapi.nets.ssdMobilenetv1.loadFromDisk(MODEL_URL)
       .then(faceapi.nets.faceLandmark68Net.loadFromDisk(MODEL_URL))
       .then(faceapi.nets.faceRecognitionNet.loadFromDisk(MODEL_URL))
