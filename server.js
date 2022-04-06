@@ -81,6 +81,8 @@ async function run(pass,name,id,url) {
   }
   
 }
+
+/* Update profile customer */
 async function updateprofile(resface,id,value,url,name){
   const {REACT_APP_DEV_URL,REACT_APP_PROD_URL,REACT_APP_DEV_URL_redirect,REACT_APP_PROD_URL_redirect} =process.env;
   await axios.patch(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${id}`,{         
@@ -90,6 +92,8 @@ async function updateprofile(resface,id,value,url,name){
     console.log("done")
         
 }
+
+/* Nerima post req dari front end */
 app.post("/validation",async (req,res)=>{
 const image=req.body.image
 const name=req.body.name
@@ -102,28 +106,8 @@ res.send({job:"done"})
 })
 /*  */
 
-/* Check Face From Video */
-app.post("/checkface",async (req,res)=>{
-  await faceapi.nets.ssdMobilenetv1.loadFromDisk(MODEL_URL)
-  .then(faceapi.nets.faceLandmark68Net.loadFromDisk(MODEL_URL))
-  .then(faceapi.nets.faceRecognitionNet.loadFromDisk(MODEL_URL))
-   console.log("Detect Human from Video")
-  
-    const MODEL_URL2=`${devEnv  ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}`+'/customerVideo/';
-    const video=MODEL_URL2+`how-to-give-a-60-second-self-introduction-presentation_IqZA0A2H-1648935979501.mp4`
-       const canvas = faceapi.createCanvas(video);
-       const displaySize={width:video.width,height:video.height}
-       faceapi.matchDimensions(canvas,displaySize)
-       const photo = await faceapi.detectAllFaces(canvas)
-      .withFaceLandmarks().withFaceDescriptors()
-     console.log(photo)
-    console.log("Done detecting")
-   
-    })
-/*  */
-
-
 /* MULTER STORE FILE */
+/* store video */
 const storageVideo = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./public/customerVideo");
@@ -139,6 +123,7 @@ const storageVideo = multer.diskStorage({
   },
 });
 
+/* store pdf */
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./public/customerPhoto/passport");
@@ -157,56 +142,9 @@ const upload = multer({ storage: storage });
 const uploadVideo = multer({ storage: storageVideo });
 /*  */
 
-var param3="";
-var param4="";
-
-var param_ss=""
-var param_ss_id=""
-
-/* Screenshot from video */
-app.post('/screenshoot',(req,res)=>{
-  const src=req.body.video
-  param_ss_id=req.body.id
-  ffmpeg({ source: src })
-    .on('filenames', (filenames) => {
-        console.log('Created file names', filenames);
-        param_ss=filenames
-        })
-    .on('end', () => {
-      updatescreenshoot();
-      console.log('Job done');
-        }
-      )
-    .on('error', (err) => {
-        console.log('Error', err);
-    })
-    .takeScreenshots({
-        filename: req.body.name,
-        timemarks: [1,2,3,4,5]
-    }, `public/customerPhoto`)
-  
-})
-/*  */
-
-/* Face Crop From Image */
-app.post('/facecrop',(req,res)=>{
-const img=req.body.image
-const name=req.body.name
-const id=req.body.id
- for (let i = 0; i <img.length; i++) {
-  const filename=  req.protocol + "://" + req.get("host") + "/customerPhoto/" + req.body.image[i];
-  console.log(req.protocol + "://" + req.get("host") + "/customerPhoto/" + req.body.image[i]);
-  facecrop(filename, `./public/customerPhoto/${name}_final_${i}.jpg`, "image/jpeg", 1)
-  .catch((error)=>console.log(error))
- }
- /* const passport=  req.protocol + "://" + req.get("host") + "/customerFile/" + req.body.filename; 
- console.log(passport) */
- facecrop(req.body.filename, `./public/customerPhoto/passport_${name}_final_.jpg`, "image/jpeg", 1)
-  res.json({status:200})  
-}
-)
 
 /* SAVING VIDEO */
+var param4="";
 app.post(`/download2`, uploadVideo.single("video"), async(req, res) => {
   console.log(req.body.id)
   const id=req.body.id
@@ -224,7 +162,6 @@ console.log('Start SS')
        
         })
     .on('end', async() => {
-    //updatescreenshoot();
   const devEnv=process.env.NODE_ENV !== "production";
   const {REACT_APP_DEV_URL,REACT_APP_PROD_URL} =process.env;
 
@@ -232,7 +169,7 @@ console.log('Start SS')
     videourl:param4,
     status:"Section 3"
 })
-
+  /* cropping face dari ss ffmpeg */
   for (let i = 1; i <=4; i++) {
     try {
       res.header("Access-Control-Allow-Origin", "*")
@@ -244,8 +181,6 @@ console.log('Start SS')
       console.log("Faces Not Found")      
     }
   }
-
-  
     }
       )
     .on('error', (err) => {
@@ -261,7 +196,7 @@ console.log('Start SS')
 })
 /*  */
 
-
+/* nerima req post /download dari frontend */
 app.post(`/download`, upload.single("file"), async (req, res) => {
   const id=req.body.id
   const name=req.body.name
@@ -281,40 +216,9 @@ app.post(`/download`, upload.single("file"), async (req, res) => {
       await axios.patch(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${id}`,{         
           filename:finalImageURL,
           status:"Section 2"
-      })  
-    
-    
-    
-  // updatepdf(id,finalImageURL,res) 
-    
+      })     
 });
-
-async function updatepdf(id,image,res){
-  const devEnv=process.env.NODE_ENV !== "production";
-  const {REACT_APP_DEV_URL,REACT_APP_PROD_URL} =process.env;
-    await axios.patch(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${id}`,{         
-        filename:image,
-        status:"Section 2"
-    })         
-}
-
-const updatescreenshoot = async(e)=>{
-  const devEnv=process.env.NODE_ENV !== "production";
-  const {REACT_APP_DEV_URL,REACT_APP_PROD_URL} =process.env;
-    await axios.patch(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${param_ss_id}`,{         
-        imagearray:param_ss,
-       })          
-}
-
-const updatevideo = async(e)=>{
-  const devEnv=process.env.NODE_ENV !== "production";
-  const {REACT_APP_DEV_URL,REACT_APP_PROD_URL} =process.env;
-    await axios.patch(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${param3}`,{         
-        videourl:param4,
-        status:"Section 3"
-    })
-          
-}
+/*  */
 
 /* NODE MAILER UNTUK KIRIM EMAIL */
 app.post('/send-mail',(req,res)=>{
@@ -374,14 +278,6 @@ app.post('/ocr',(req,res)=>{
     })();  
 })
 
-/*  */
-
-/* CARI NAMA DARI TEXT OCR */
-/* function getname(text){
-  const namesFound = nr.find(text );
-  return namesFound;
-}
-/*  */ 
 
 
 /* GABUNGIN EXPRESS SAMA JSON SERVER */
@@ -393,8 +289,7 @@ if (process.env.NODE_ENV === 'production') {
   app.get('/*', function(req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 
-  });
-  
+  }); 
 }
 /*  */
 
