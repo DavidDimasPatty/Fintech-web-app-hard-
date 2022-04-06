@@ -26,9 +26,16 @@ const AddUser = () => {
       // console.log(respon.data);
       if(respon.data.length === 0) {
         if(username.length > 0) {
-          if(password.length > 0) {
+          if(password.length > 0 ) {
             if(email.length > 0) {
-              saveUser();
+              for(let i = 0; i>email.length; i++){
+                if(email.charAt[i] == "@"){
+                  saveUser();
+                }
+                else{
+                  i++
+                }
+              }
             }
             else{
               window.alert("Email can't be empty");
@@ -62,8 +69,7 @@ const AddUser = () => {
       createdAt:date_create,
       updatedAt:date_create
     })
-
-    history.push("/");
+    .then((res) => window.location.href="/")
 
   }
   

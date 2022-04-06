@@ -49,7 +49,7 @@ const CustomerList = () => {
       {customer.map((customers) => 
         <div key={customers.id}> {
           <div className="customerCard m-3 pb-2">
-            <div className="cardImage"><img src="https://freepikpsd.com/file/2019/10/default-profile-image-png-1-Transparent-Images.png"/></div>
+            <div className="cardImage"><img src={(customers.profile_picture === "" || customers.profile_picture == null) ? "https://freepikpsd.com/file/2019/10/default-profile-image-png-1-Transparent-Images.png" : customers.profile_picture}/></div>
             <div className="cardInfo">
               <div className="cardLabel">{customers.name}</div>
               <div className="cardLabel">{customers.email}</div>

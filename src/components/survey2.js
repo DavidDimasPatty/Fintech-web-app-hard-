@@ -89,7 +89,7 @@ const Mail2 = () => {
       // console.log(respon.data[0].id);
       setid(respon.data[0].id);
       const stat=respon.data[0].status;
-      //checkstatus(stat);
+      // checkstatus(stat);
       passport2=respon.data[0].videourl
       // console.log(passport2);
       if(passport2 !== "") {
@@ -107,7 +107,7 @@ const Mail2 = () => {
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_DEV_URL, REACT_APP_PROD_URL} = process.env;
     await axios.get(`${devEnv ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/mail_url`, {
-      params:{
+      params: {
         url:url_mail
       }
     })

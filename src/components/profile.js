@@ -104,7 +104,7 @@ const Profile = () => {
       <div className="cardContainer mt-5 mb-5 column is-10">
         
         <center>
-          <img className="profileImage" src="https://freepikpsd.com/file/2019/10/default-profile-image-png-1-Transparent-Images.png"/>
+          <img className="profileImage" src={photo}/>
           <div className="profileInfo">
             <div className="is-size-4">Name</div>
             <span className="is-size-4">:</span>

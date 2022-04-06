@@ -36,9 +36,17 @@ const Onboard = () => {
       email: email,
       birth: "",
       country: "",
-      status:"Section 1",
+      status:"Pending",
       createdAt: Date.now(),
       updatedAt: Date.now(),
+      filename:"" ,
+      videourl: "",
+      passnum: "",
+      occupation: "",
+      address: "",
+      phone: "",
+      profile_picture: "",
+      value: ""
     })
 
   }
@@ -47,23 +55,28 @@ const Onboard = () => {
 
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_PROD_URL_mail, REACT_APP_PROD_URL, REACT_APP_DEV_URL_mail ,REACT_APP_DEV_URL_sendmail} = process.env;
+    console.log(email);
 
-    await axios.post(`${devEnv ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}/send-mail`, {
-      data: {
-        target:email,
-        subject:`Fintech new Customer`,
-        html:`
-        <h3>Welcome aboard ${username}<h3>
-        <div>Halo, ${username}, welcome to fintech, use this link to process next step</div>
-        <div><a href="${devEnv ? REACT_APP_DEV_URL_mail : REACT_APP_PROD_URL_mail}/${random}/${username}">Click Here</a><div>
-        `
-      }
-    }).then((respon) => {
-      setusername("")
-      setemail("")
-      // console.log(respon.data);
-    })
-    
+    if(email.includes("@")){
+      await axios.post(`${devEnv ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}/send-mail`, {
+        data: {
+          target:email,
+          subject:`Fintech new Customer`,
+          html:
+          `<h3>Welcome aboard ${username}<h3>
+          <div>Halo, ${username}, welcome to fintech, use this link to process next step</div>
+          <div><a href="${devEnv ? REACT_APP_DEV_URL_mail : REACT_APP_PROD_URL_mail}/${random}/${username}">Click Here</a><div>`
+          
+        }
+      }).then((respon) => {
+        setusername("")
+        setemail("")
+        // console.log(respon.data);
+      })
+    }
+    else{
+      window.alert("email must have '@'")
+    }
   }
   
   return (

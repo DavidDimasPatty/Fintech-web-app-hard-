@@ -68,7 +68,7 @@ async function run(pass,name,id,url) {
     if(i==4){
       resface=MODEL_URL2+`${name}_${i}.png`
       console.log("masuk")
-      updateprofile(resface,id,value,url,name);
+      updateprofile(resface,id,">0.5",url,name);
     }
     if(parseFloat(bestMatch.toString())<=0.4){
       resface=MODEL_URL2+`${name}_${i}.png`

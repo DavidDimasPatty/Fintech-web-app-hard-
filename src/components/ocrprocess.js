@@ -4,7 +4,7 @@ import {useHistory, useParams} from "react-router-dom";
 import axios from "axios";
 import "bulma/css/bulma.min.css";
 import "./survey.css";
-//import Tesseract from "tesseract.js";
+// import Tesseract from "tesseract.js";
 
 const OCRPROCESS = () => {
   
@@ -45,7 +45,6 @@ const OCRPROCESS = () => {
         // console.log(res.data.name[0].name);
         ReactSession.set("name", res.data.name[0].name)
       }
-      ;
       window.location.href=`/mail2/${url_mail}/${username}`
     })
     .catch((err) => console.log(err));
