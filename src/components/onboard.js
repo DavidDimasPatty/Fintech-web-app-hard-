@@ -49,6 +49,7 @@ const Onboard = () => {
       if(respon.data.length === 0) {
         sendemail(randomUrl);
         savecustomer();
+        window.alert("Success!")
       }
       else{
         window.alert("Username or email has been taken");

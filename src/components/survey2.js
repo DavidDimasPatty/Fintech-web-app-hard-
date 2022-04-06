@@ -122,9 +122,11 @@ const Mail2 = () => {
     formData.append("name", username)
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_DEV_URL_sendmail, REACT_APP_PROD_URL} = process.env;
+    flag = false
     await fetch(`${devEnv ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}/download2`, {
       method: "POST",
       body: formData,
+
     })
     .then((res) => {
       // console.log("done request");
@@ -133,6 +135,12 @@ const Mail2 = () => {
       document.getElementById("btnsubmit").disabled = false
     })
     .catch((err) => console.log(err));
+    }
+    else{
+      document.getElementById("vid").disabled = true;
+      document.getElementById("btnsubmit").disabled = false
+    }
+
   }
   
   
