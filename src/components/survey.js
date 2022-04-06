@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useHistory,useParams} from "react-router-dom";
-import {MDBContainer, MDBRow, MDBCol, MDBCard} from "mdbreact";
 import "bulma/css/bulma.min.css";
+import "./survey.css";
 
 const Mail = () => {
   const [passport2, setpassport] = useState("");
@@ -89,24 +89,12 @@ const Mail = () => {
     
   return (
     <center>
-      <MDBContainer>
-        <MDBCard className="mt-5 column is-6">
-          <MDBCol>
-            <MDBRow className="mb-2">
-              <MDBCol><h2 className="is-size-2">Form</h2></MDBCol>
-            </MDBRow>
-            <MDBRow>
-              <MDBCol>Upload your passport</MDBCol>
-            </MDBRow>
-            <MDBRow>
-              <MDBCol><input onChange={handleUploadChange} type="file" accept="image/png, image/gif, image/jpeg"/></MDBCol>
-            </MDBRow>
-            <MDBRow className="mt-2 pb-4">
-              <MDBCol><button onClick={downloadFile} className="btn btn-primary mt-2 w-100">Next</button></MDBCol>
-            </MDBRow>
-          </MDBCol>
-        </MDBCard>
-      </MDBContainer>
+      <div className="surveyContainer mt-5 column is-6">
+        <div className="is-size-2 mb-4">Form</div>
+        <div>Upload your passport</div>
+        <input className="mt-2 mb-2" onChange={handleUploadChange} type="file" accept="image/png, image/gif, image/jpeg"/>
+        <button className="btn btn-primary mt-4 mb-4 w-100" onClick={downloadFile}>Next</button>
+      </div>
     </center>
   )
 }

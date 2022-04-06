@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {useHistory, useParams} from "react-router-dom";
 import axios from "axios";
-import {MDBContainer, MDBRow, MDBCol, MDBCard} from "mdbreact";
 import "bulma/css/bulma.min.css";
+import "./survey.css";
 
 const Mail2 = () => {
   var [passport2, setpassport] = useState(null);
@@ -143,24 +143,12 @@ const Mail2 = () => {
   
   return (
     <center>
-      <MDBContainer>
-        <MDBCard className="mt-5 column is-6">
-          <MDBCol>
-            <MDBRow className="mb-2">
-              <MDBCol><h2 className="is-size-2">Form</h2></MDBCol>
-            </MDBRow>
-            <MDBRow>
-              <MDBCol>Upload Video (maximum 5 second)</MDBCol>
-            </MDBRow>
-            <MDBRow>
-              <MDBCol><input onChange={handleUploadChange} type="file" id="vid" accept="video/*"/></MDBCol>
-            </MDBRow>
-            <MDBRow className="mt-2 pb-4">
-              <MDBCol><button id="btnsubmit" onClick={() => {window.location.href=`/mail3/${url_mail}/${username}`}} className="btn btn-primary mt-2 w-100">Next</button></MDBCol>
-            </MDBRow>
-          </MDBCol>
-        </MDBCard>
-      </MDBContainer>
+      <div className="surveyContainer mt-5 column is-6">
+        <div className="is-size-2 mb-4">Form</div>
+        <div>Upload Video (maximum 5 second)</div>
+        <input className="mt-2 mb-2" onChange={handleUploadChange} type="file" id="vid" accept="video/*"/>
+        <button className="btn btn-primary mt-4 mb-4 w-100" id="btnsubmit" onClick={() => {window.location.href=`/mail3/${url_mail}/${username}`}}>Next</button>
+      </div>
     </center>
   )
 }

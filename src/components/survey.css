@@ -1,0 +1,45 @@
+.surveyContainer{
+    margin-top: 40px;
+    width: 50%;
+    border: 1px solid;
+    border-color: #F0F0F0;
+    border-radius: 5px;
+    box-shadow: 1px 8px 8px 0px #F0F0F0;
+    padding: 22px 2px 2px 2px;
+}
+.loadingContainer{
+    width: 100vw;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.onProgress{
+    margin: auto;
+    /* text-transform: uppercase; */
+    background-image: linear-gradient(
+        -225deg,
+        #222222 0%,
+        #555555 29%,
+        #878787 67%,
+        #A9A9A9 100%
+    );
+    background-size: auto auto;
+    background-clip: border-box;
+    background-size: 200% auto;
+    color: #fff;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textclip 2s linear infinite;
+    display: inline-block;
+    /* font-size: 190px; */
+}
+@keyframes textclip{
+    to{
+        background-position: 200% center;
+    }
+}
+select{
+    width: 50%;
+}

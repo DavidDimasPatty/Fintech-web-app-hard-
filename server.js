@@ -1,35 +1,35 @@
-const jsonServer = require('json-server');
+const jsonServer = require("json-server");
 jsonServer.create();
-const express= require("express")
-const cors= require('cors')
-const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
-const ffmpeg = require('fluent-ffmpeg');
+const express = require("express");
+const cors = require("cors");
+const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
+const ffmpeg = require("fluent-ffmpeg");
 ffmpeg.setFfmpegPath(ffmpegPath);
-var nr = require( 'name-recognition' );
-var dateFinder =require ('datefinder')
-var countryFinder=require ("country-in-text-detector")
-const faceapi=require('face-api.js')
-const path = require('path')
-const fs = require("fs") 
-const { createWorker, createScheduler } = require('tesseract.js');
+var nr = require("name-recognition");
+var dateFinder = require("datefinder");
+var countryFinder = require("country-in-text-detector");
+const faceapi = require("face-api.js");
+const path = require("path");
+const fs = require("fs");
+const { createWorker, createScheduler } = require("tesseract.js");
 const multer = require("multer");
 const app = express();
-const mailer=require('nodemailer');
-const bodyParser=require('body-parser');
-const facecrop = require('opencv-facecrop');
-//const tf=require('@tensorflow/tfjs-node')
-const { default: axios } = require('axios');
-const canvas=require('canvas');
-const { idali } = require('name-recognition/lib/femaleNames');
-const { Redirect } = require('react-router-dom');
-require('dotenv').config();
+const mailer = require("nodemailer");
+const bodyParser = require("body-parser");
+const facecrop = require("opencv-facecrop");
+// const tf = require("@tensorflow/tfjs-node");
+const { default: axios } = require("axios");
+const canvas = require("canvas");
+const { idali } = require("name-recognition/lib/femaleNames");
+const { Redirect } = require("react-router-dom");
+require("dotenv").config();
 
 /* EXPRESS CONFIGURATION */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 const PORT = process.env.PORT || 2000;
-const devEnv=process.env.NODE_ENV !== "production";
+const devEnv = process.env.NODE_ENV !== "production";
 /*  */
 
 /* FACE API */

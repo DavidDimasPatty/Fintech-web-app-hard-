@@ -3,6 +3,7 @@ import {ReactSession} from "react-client-session";
 import {useHistory, useParams} from "react-router-dom";
 import axios from "axios";
 import "bulma/css/bulma.min.css";
+import "./survey.css";
 //import Tesseract from "tesseract.js";
 
 const OCRPROCESS = () => {
@@ -101,7 +102,9 @@ const OCRPROCESS = () => {
   
   return (
     <center>
-      WAIT
+      <div className="loadingContainer">
+        <div className="is-size-3 onProgress">Please wait...</div>
+      </div>
     </center>
   )
 
