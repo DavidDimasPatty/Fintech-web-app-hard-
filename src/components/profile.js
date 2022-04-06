@@ -20,6 +20,7 @@ const Profile = () => {
   const [phone, setphone] = useState("");
   const [status, setstatus] = useState("");
   const [photo, setphoto]=useState("");
+  const [value, setvalue]=useState("");
   const {id} = useParams();
   /*  */
   
@@ -78,6 +79,7 @@ const Profile = () => {
     setaddress(response.data.address);
     setphone(response.data.phone);
     setstatus(response.data.status);
+    setvalue(response.data.value)
     if(response.data.profile_picture == "") {
       setphoto("https://freepikpsd.com/file/2019/10/default-profile-image-png-1-Transparent-Images.png");
     }
@@ -152,6 +154,11 @@ const Profile = () => {
             <div className="is-size-4">Occupation</div>
             <span className="is-size-4">:</span>
             <div className="is-size-4">{(occupation === "" || occupation == null) ? "-" : occupation}</div>
+          </div>
+          <div className="profileInfo">
+            <div className="is-size-4">Value</div>
+            <span className="is-size-4">:</span>
+            <div className="is-size-4">{(value === "" || value == null) ? "-" : value}</div>
           </div>
           <div className="profileInfo">
             <div className="is-size-4">Status</div>
