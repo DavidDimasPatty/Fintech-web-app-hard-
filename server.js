@@ -360,10 +360,14 @@ app.post('/ocr',(req,res)=>{
       console.log("teks "+text)
       const namesFound = nr.find(text );
       console.log(namesFound)
+      const countryName =countryFinder.detect(text);
+      console.log(countryName)
+      const dateFind= dateFinder(text)
+      console.log(dateFind)
       console.log("done searching for name")
       res.header("Access-Control-Allow-Origin", "*")
       console.log('Job done');
-      res.send({name:namesFound})
+      res.send({name:namesFound,country:countryName,date:dateFind})
     } catch (error) {
      console.log(error) 
     }
