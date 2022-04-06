@@ -21,8 +21,33 @@ const Onboard = () => {
     await axios.post(`${devEnv ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/mail_url`, { 
       url:randomUrl
     })
-    savecustomer();
-    sendemail(randomUrl);
+    validate();
+ 
+
+
+  }
+
+  const validate = async (e) => {
+
+    const devEnv = process.env.NODE_ENV !== "production";
+    const {REACT_APP_DEV_URL, REACT_APP_PROD_URL} = process.env;
+
+    await axios.get(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer`, {
+      params: {
+        username:username,
+        email:email
+      }
+    }).then((respon) => {
+      console.log(respon.data);
+      if(respon.data.length === 0) {
+        sendemail(randomUrl);
+        savecustomer();
+      }
+      else{
+        window.alert("Username or email has been taken");
+      }
+
+    })
 
   }
   
