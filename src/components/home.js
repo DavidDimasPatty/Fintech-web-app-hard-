@@ -4,12 +4,13 @@ import {useHistory} from "react-router-dom";
 import "./home.css";
 
 const Home = () => {
-
+  /* Dapetin token dari login */
   const token = ReactSession.get("login");
-  // console.log(token);
-  const history = useHistory();
-
-  if(token != "true") {
+  /*  */
+const history = useHistory();
+  
+/* Check token */
+if(token != "true") {
     history.push("/");
     return(
       <div style={"height:100"}></div>

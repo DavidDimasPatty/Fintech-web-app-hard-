@@ -6,6 +6,7 @@ import "./survey.css";
 import {ReactSession} from "react-client-session";
 
 const Mail3 = () => {
+  /* set variable */
   const [birth, setbirth] = useState("");
   const [passportnum, setpassportnum] = useState("");
   const [region, setregion] = useState("");
@@ -14,14 +15,14 @@ const Mail3 = () => {
   const [address, setaddress] = useState("");
   const [occupation, setoccupation] = useState("");
   const history = useHistory();
-  /* const date_create= moment().format("DD-MM-YYYY hh:mm:ss") */
   const {url_mail} = useParams();
   const {username} = useParams();
   const [videoo, setvideo] = useState("");
   var name = ReactSession.get("name");
   var country = ReactSession.get("country");
   var date = ReactSession.get("birthdate");
-  console.log(name+" "+country+" "+date)
+/*  */
+
   useEffect(() => {
     if(country==undefined||country==""){
      
@@ -46,6 +47,7 @@ const Mail3 = () => {
     }
   }
   
+  /* validation for page display */
   const checkemail = async(e) => {
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_DEV_URL, REACT_APP_PROD_URL} = process.env;
@@ -71,17 +73,15 @@ const Mail3 = () => {
       }
     })
     .then((respon) => {
-      // console.log(respon.data[0].id);
       setid(respon.data[0].id);
       const stat = respon.data[0].status;
-      // checkstatus(stat);
       const video = respon.data[0].videourl;
       setvideo(video, respon.data[0].filename)
-      // getss(video)
-      // getcapture(video)
     })
   }
+  /*  */
   
+  /* EDIT DB CUSTOMER */
   const editCustomer = async (e) => {
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_DEV_URL, REACT_APP_PROD_URL} = process.env;
@@ -95,9 +95,8 @@ const Mail3 = () => {
       status:"Complete",
       updatedAt:Date.now()
     }).then((res) => window.location.href=`/validation/${url_mail}/${username}`)
-    // getss(videoo);
-    // window.location.href=`/complete/${url_mail}/${username}`
   }
+    /* */
   
   return (
     <center>

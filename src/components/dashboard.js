@@ -4,9 +4,11 @@ import {NavLink} from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import "./dashboard.css";
 
+/* set token ke false */
 function logout() {
   ReactSession.set("login", "false");
 }
+/*  */
 
 const Dashboard = ({collapsed, toggled, handleToggleSidebar}) => {
 

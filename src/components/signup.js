@@ -13,6 +13,7 @@ const AddUser = () => {
   const [email, setemail] = useState("");
   const date_create = moment().format("DD-MM-YYYY hh:mm:ss");
 
+  /* Check username di db */
   const validate = async (e) => {
 
     const devEnv = process.env.NODE_ENV !== "production";
@@ -55,6 +56,7 @@ const AddUser = () => {
 
   }
 
+  /* Save user baru di db */
   const saveUser = async (e) => {
 
     const devEnv = process.env.NODE_ENV !== "production";

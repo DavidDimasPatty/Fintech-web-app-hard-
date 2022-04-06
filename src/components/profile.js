@@ -7,6 +7,7 @@ import "./profile.css";
 const Profile = () => {
   
   const history = useHistory();
+/* set variable for display */
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [birth, setBirth] = useState("");
@@ -20,11 +21,13 @@ const Profile = () => {
   const [status, setstatus] = useState("");
   const [photo, setphoto]=useState("");
   const {id} = useParams();
+  /*  */
   
   useEffect(() => {
     getProfile();
   }, []);
   
+  /* download file */
   function download(links) {
     const link = document.createElement("a");
     link.href = links;
@@ -33,7 +36,9 @@ const Profile = () => {
     link.click();
     document.body.removeChild(link);
   }
-  
+  /*  */
+
+  /*Edit status ke db  */
   const accept = async () => {
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_DEV_URL, REACT_APP_PROD_URL} = process.env;
@@ -43,7 +48,9 @@ const Profile = () => {
       window.location.href=`/customers/${id}`
     })
   }
-  
+  /*  */
+
+  /*Edit status ke db  */
   const reject = async () => {
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_DEV_URL, REACT_APP_PROD_URL} = process.env;
@@ -53,13 +60,13 @@ const Profile = () => {
       window.location.href=`/customers/${id}`
     })
   }
-  
+  /*  */
+
+  /* request get customer with id */
   const getProfile = async () => {
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_DEV_URL, REACT_APP_PROD_URL} = process.env;
     const response = await axios.get(`${devEnv ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${id}`,)
-    // console.log(response.status);
-    // console.log(response.data);
     setName(response.data.name);
     setEmail(response.data.email);
     setBirth(response.data.birth);
@@ -78,17 +85,18 @@ const Profile = () => {
       setphoto(response.data.profile_picture);
     }
   }
+  /*  */
   
+  /* Check token */
   const token = ReactSession.get("login");
-  // console.log(token);
-  
   if(token != "true") {
     history.push("/");
     return(
       <div style={"height:100"}></div>
     );
   }
-  
+  /*  */
+
   return (
   
     <div className="container column is-20">

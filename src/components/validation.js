@@ -17,28 +17,7 @@ const ValidationSurvey = () => {
     checkid();
   }, []);
   
-  /* function loadImage(pass) {
-    if(pass) {
-      const devEnv = process.env.NODE_ENV !== "production";
-      const {REACT_APP_DEV_URL_sendmail, REACT_APP_PROD_URL} = process.env;
-      const MODEL_URL = `${devEnv ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}`+'/models/';
-      var descriptions = [];
-      const faceImage = new Image()
-      faceImage.src = pass
-      const res = faceapi.detectAllFaces(faceImage).withFaceLandmarks().withFaceDescriptors()
-      if(res) {
-        descriptions = [res.descriptor]
-      }
-      console.log(descriptions);
-      console.log(res);
-      const labeledDescriptors = [new faceapi.LabeledFaceDescriptors(username, descriptions )]
-      const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors)
-      console.log('faceMatcher:', faceMatcher);
-    }
-    descriptions.push(detections.descriptor)
-    console.log(descriptions);
-  } */
-  
+  /* check passport and face from video (face-api) */
   async function loadImage(pass, id) {
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_DEV_URL_sendmail, REACT_APP_PROD_URL} = process.env;
@@ -53,26 +32,10 @@ const ValidationSurvey = () => {
       window.location.href=`/complete/${url_mail}/${username}`
     })
   }
+  /*  */
+
   
-  function loadLabeledImages() {
-    const devEnv = process.env.NODE_ENV !== "production";
-    const {REACT_APP_DEV_URL_sendmail, REACT_APP_PROD_URL} = process.env;
-    const MODEL_URL = `${devEnv ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}`+'/models/';
-    const labels = [`${username}`]
-    return Promise.all(
-      labels.map(async label => {
-        const descriptions = []
-        for (let i = 1; i <= 3; i++) {
-          const img = await faceapi.fetchImage(`${devEnv ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}/customerPhoto/${label}/${label}_${i}.png`)
-          const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor();
-          // console.log(detections);
-          descriptions.push(detections.descriptor)
-        }
-        return new faceapi.LabeledFaceDescriptors(labels, descriptions)
-      })
-    )
-  }
-  
+  /* Validation for page display */
   const checkid = async(e) => {
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_DEV_URL, REACT_APP_PROD_URL} = process.env;
@@ -82,19 +45,15 @@ const ValidationSurvey = () => {
       }
     })
     .then((respon) => {
-      // console.log(respon.data[0].id);
       setid(respon.data[0].id);
       const stat = respon.data[0].status;
       const pass = respon.data[0].filename;
       setpassport(pass);
-      // checkstatus(stat);
       loadImage(pass, respon.data[0].id);
-      // getface(respon.data[0].imagearray,respon.data[0].filename);
     })
   }
   
   function checkstatus(stat) {
-    // console.log(stat);
     if(stat === "Section 2") {
       history.push(`/mail2/${url_mail}/${username}`)
     }
@@ -121,21 +80,9 @@ const ValidationSurvey = () => {
       }
     }).catch((err) => console.log(err));
   }
+  /*  */
+
   
-  async function getface(image, filename) {
-    const devEnv = process.env.NODE_ENV !== "production";
-    const {REACT_APP_DEV_URL_sendmail, REACT_APP_PROD_URL} = process.env;
-    await axios.post(`${devEnv ? REACT_APP_DEV_URL_sendmail : REACT_APP_PROD_URL}/facecrop`, {
-      image:image,
-      name:username,
-      id:id,
-      filename:filename
-    }).then((res) => {
-      setpassport(res.filename)
-      loadImage();
-    })
-    .catch((err) => console.log(err));
-  }
   return (
     <center>
       <div className="loadingContainer">

@@ -5,6 +5,7 @@ import "bulma/css/bulma.min.css";
 import "./survey.css";
 
 const Mail = () => {
+  /* set variable */
   const [passport2, setpassport] = useState("");
   const [passport, setSavepassport] = useState(null);
   const history = useHistory();
@@ -12,11 +13,14 @@ const Mail = () => {
   const {username} = useParams();
   const [id, setid] = useState("");
   const [status, setstatus] = useState("");
+  /*  */
+
   useEffect(() => {
     checkemail();
     checkid();
   }, []);
   
+  /* check status */
   function checkstatus(stat) {
     if(stat === "Section 1") {
       history.push(`/mail/${url_mail}/${username}`)
@@ -28,7 +32,9 @@ const Mail = () => {
       history.push(`/complete/${url_mail}/${username}`)
     }
   }
+  /*  */
   
+  /* handle change */
   function handleUploadChange(e) {
     let uploaded = e.target.files[0];
     console.log(uploaded)
@@ -36,7 +42,9 @@ const Mail = () => {
     // console.log(passport2);
     setSavepassport(uploaded);
   }
+  /*  */
   
+  /* validation user for page */
   const checkid = async(e) => {
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_DEV_URL, REACT_APP_PROD_URL} = process.env;
@@ -46,10 +54,8 @@ const Mail = () => {
       }
     })
     .then((respon) => {
-      // console.log(respon.data[0].id);
       setid(respon.data[0].id);
       const stat = respon.data[0].status;
-      /* checkstatus(stat); */
     })
   }
   
@@ -68,6 +74,9 @@ const Mail = () => {
       }
     }).catch((err) => console.log(err));
   }
+  /*  */
+
+  /* post file to server */
   const downloadFile = async(e) => {
     console.log("masuk")
     if(passport) {
@@ -89,7 +98,8 @@ const Mail = () => {
       .catch((err) => console.log(err));
     }
   }
-    
+  /*  */
+  
   return (
     <center>
       <div className="surveyContainer mt-5 column is-6">

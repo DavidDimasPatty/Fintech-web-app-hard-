@@ -10,11 +10,13 @@ const Login = () => {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
 
+  /* TOKEN */
   const token = ReactSession.get("login");
-  // console.log(token);
+
 
   const history = useHistory();
 
+  /* Check table user di db */
   const login = async (e) => {
     
     if(username && password) {
@@ -30,13 +32,12 @@ const Login = () => {
       }).then((respon) => {
 
         if(respon.data.length !== 0) {
-          // console.log("success");
-          // console.log(respon.data);
+         /* set token kalau berhasil login */
           ReactSession.set("login", "true");
           history.push("/home");
         }
         else{
-          // console.log("failed to login.");
+        
           window.alert("Invalid username or password");
         }
 
@@ -48,7 +49,7 @@ const Login = () => {
     }
 
   }
-  
+  /*  */
   return (
 
   <center>

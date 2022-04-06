@@ -7,13 +7,12 @@ import "./onboard.css";
 import {ReactSession} from "react-client-session";
 
 const Onboard = () => {
-
   const [username, setusername] = useState("");
   const [email, setemail] = useState("");
   const history = useHistory();
-  const date_create = moment().format("DD-MM-YYYY hh:mm:ss");
-  const randomUrl = Math.floor(100000000 + Math.random() * 900000000);
+  const randomUrl = Math.floor(100000000 + Math.random() * 900000000); /* Generate random string untuk url */
   
+  /* Save Url ke db */
   const saveUrl = async(e) => {
 
     const devEnv = process.env.NODE_ENV !== "production";
@@ -24,9 +23,10 @@ const Onboard = () => {
     })
     validate();
  
-
-
   }
+  /*  */
+ 
+ /* Check Token */
   const token = ReactSession.get("login");
   if(token != "true") {
     history.push("/");
@@ -34,6 +34,9 @@ const Onboard = () => {
       <div style={"height:100"}></div>
     );
   }
+ /*  */
+ 
+ /* Check username sama email di db customer  */
   const validate = async (e) => {
 
     const devEnv = process.env.NODE_ENV !== "production";
@@ -58,7 +61,10 @@ const Onboard = () => {
     })
 
   }
-  
+  /*  */
+
+
+  /* Save customer baru ke db customer */
   const savecustomer = async(e) => {
 
     const devEnv = process.env.NODE_ENV !== "production";
@@ -83,7 +89,9 @@ const Onboard = () => {
     })
 
   }
-  
+  /*  */
+
+  /* manggil node mailer ke server */
   const sendemail = async (random) => {
 
     const devEnv = process.env.NODE_ENV !== "production";
@@ -104,13 +112,13 @@ const Onboard = () => {
       }).then((respon) => {
         setusername("")
         setemail("")
-        // console.log(respon.data);
       })
     }
     else{
       window.alert("email must have '@'")
     }
   }
+  /*  */
   
   return (
   

@@ -5,14 +5,17 @@ import axios from "axios";
 import "./customerList.css";
 
 const CustomerList = () => {
-
+  /* set variable for display in map*/
   const [customer, setCustomer] = useState([]);
+  /*  */
+
   useEffect(() => {
     getAllCustomer();
   }, []);
 
   const history = useHistory();
 
+  /* Request semua customer ke db */
   const getAllCustomer = async () => {
 
     const devEnv = process.env.NODE_ENV !== "production";
@@ -22,17 +25,18 @@ const CustomerList = () => {
     setCustomer(response.data);
 
   }
-  
+  /*  */
+
+  /* Check token */
   const token = ReactSession.get("login");
-  // console.log(token);
-  
-  if(token != "true") {
+   if(token != "true") {
     history.push("/");
     return (
       <div style={"height:100"}></div>
     );
   }
-  
+  /*  */
+
   return (
 
   <div className="container column is-20">
@@ -45,7 +49,7 @@ const CustomerList = () => {
     </nav>
 
     <div className="containers">
-      
+  
       {customer.map((customers) => 
         <div key={customers.id}> {
           <div className="customerCard m-3 pb-2">

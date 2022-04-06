@@ -6,6 +6,7 @@ import "./survey.css";
 import {ReactSession} from "react-client-session";
 
 const Mail2 = () => {
+  /* set variable */
   var [passport2, setpassport] = useState(null);
   const [passport, setSavepassport] = useState("");
   const history = useHistory();
@@ -15,17 +16,22 @@ const Mail2 = () => {
   const [filename, setfilename] = useState("");
   const [name, setname] = useState("");
     var tokenup=ReactSession.get("upload")
-  useEffect(() => {
+  /*  */
   
+    useEffect(() => {
+  /* check token kalo udah ada file */
     if(tokenup==true){
     document.getElementById("vid").disabled = true;
     document.getElementById("btnsubmit").disabled = false
   }
+  /*  */
+
     checkemail();
     checkid();
     checkvideo();
   }, []);
   
+  /* check video ke db */
   const checkvideo = async(e) => {
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_DEV_URL, REACT_APP_PROD_URL} = process.env;
@@ -40,6 +46,7 @@ const Mail2 = () => {
       }
     })
   }
+  /*  */
   
   /* function checkstatus(stat) {
     if(stat === "Section 2") {
@@ -53,20 +60,17 @@ const Mail2 = () => {
     }
   } */
   
+  /* handle change input file */
   async function handleUploadChange(e) {
     let uploaded = e.target.files[0];
     passport2 = uploaded
-    // console.log(passport2);
     setpassport(uploaded)
     downloadFile()
-    // console.log(uploaded);
-    // checkface(uploaded);
-    // console.log(passport2);
-    // setSavepassport(uploaded);
   }
+  /*  */
   
   
-  
+  /* validation for page display */
   const checkid = async(e) => {
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_DEV_URL, REACT_APP_PROD_URL} = process.env;
@@ -76,13 +80,9 @@ const Mail2 = () => {
       }
     })
     .then((respon) => {
-      // console.log(respon.data[0].id);
       setid(respon.data[0].id);
       const stat=respon.data[0].status;
-      // checkstatus(stat);
       passport2=respon.data[0].videourl
-      // console.log(passport2);
-      
    
       if(tokenup!== "") {
         document.getElementById("vid").disabled = true;
@@ -110,7 +110,9 @@ const Mail2 = () => {
       }
     }).catch((err) => console.log(err));
   }
-  
+/*  */
+
+/* put file to server */
   const downloadFile = async(e) => {
     
     ReactSession.set("upload",true)
@@ -127,14 +129,12 @@ const Mail2 = () => {
       body: formData,
     })
     .then((res) => {
-      // console.log("done request");
-      // console.log(res);
       document.getElementById("vid").disabled = true;
       document.getElementById("btnsubmit").disabled = false
     })
     .catch((err) => console.log(err));
   }
-  
+  /*  */
   
   return (
     <center>

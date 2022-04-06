@@ -4,35 +4,23 @@ import {useHistory, useParams} from "react-router-dom";
 import axios from "axios";
 import "bulma/css/bulma.min.css";
 import "./survey.css";
-// import Tesseract from "tesseract.js";
 
 const OCRPROCESS = () => {
-  
+  /* set variable */
   const history = useHistory();
   const {url_mail} = useParams();
   const {username} = useParams();
   const [id, setid] = useState("");
   const [filename, setfilename] = useState("");
   const [name, setname] = useState("");
-  
+  /*  */
+
   useEffect(() => {
     checkemail();
     checkid();
   }, []);
 
-
-  /* PROCESS OCR di front end */
-  /* async function ocr(imagee) {
-   await Tesseract.recognize(
-      imagee,
-      'eng',
-      { logger: m => console.log(m) }
-    ).then(({ data: { text } }) => {
-      console.log(text);
-      tex(text);
-    })
-  } */
-  
+  /* process ocr ke server (tesseract) */  
   async function ocr(image) {
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_DEV_URL_sendmail, REACT_APP_PROD_URL} = process.env;
@@ -55,7 +43,9 @@ const OCRPROCESS = () => {
     })
     .catch((err) => console.log(err));
   }
-   
+   /*  */
+
+   /* page validation */
   const checkid = async(e) => {
     const devEnv = process.env.NODE_ENV !== "production";
     const {REACT_APP_DEV_URL, REACT_APP_PROD_URL} = process.env;
@@ -65,10 +55,8 @@ const OCRPROCESS = () => {
       }
     })
     .then((respon) => {
-      // console.log(respon.data[0].id);
       setid(respon.data[0].id);
       setfilename(respon.data[0].filename)
-      // console.log("file: " + respon.data[0].filename);
       ocr(respon.data[0].filename);
     })
   }
@@ -88,6 +76,7 @@ const OCRPROCESS = () => {
       }
     }).catch((err) => console.log(err));
   }
+  /*  */
   
   return (
     <center>
