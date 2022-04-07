@@ -52,6 +52,8 @@ const Onboard = () => {
       if(respon.data.length === 0) {
         sendemail(randomUrl);
         savecustomer();
+        setusername("")
+        setemail("")
         window.alert("Success!")
       }
       else{
