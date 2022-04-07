@@ -92,7 +92,7 @@ const Mail2 = () => {
     })
     .then((respon) => {
       setid(respon.data[0].id);
-      checkstatus(respon.data[0].status);
+      //checkstatus(respon.data[0].status);
       passport2=respon.data[0].videourl
    
        if(tokenup!== "") {

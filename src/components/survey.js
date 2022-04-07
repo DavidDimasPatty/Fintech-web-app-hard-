@@ -54,7 +54,7 @@ const Mail = () => {
     })
     .then((respon) => {
       setid(respon.data[0].id);
-      checkstatus(respon.data[0].status);
+     // checkstatus(respon.data[0].status);
     })
   }
   

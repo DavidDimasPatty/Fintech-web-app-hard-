@@ -75,7 +75,7 @@ const Mail3 = () => {
     .then((respon) => {
       setid(respon.data[0].id);
       const stat = respon.data[0].status;
-      checkstatus(respon.data[0].status)
+     //checkstatus(respon.data[0].status)
     })
   }
   /*  */
