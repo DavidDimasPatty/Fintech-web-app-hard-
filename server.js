@@ -210,7 +210,7 @@ console.log('Start SS')
   const devEnv=process.env.NODE_ENV !== "production";
   const {REACT_APP_DEV_URL,REACT_APP_PROD_URL} =process.env;
 
-   axios.patch(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${id}`,{         
+   await axios.patch(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${id}`,{         
     videourl:param4,
     status:"Section 3"
 })
