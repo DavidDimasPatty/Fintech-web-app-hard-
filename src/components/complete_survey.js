@@ -32,7 +32,7 @@ const CompleteSurvey = () => {
     })
     .then((respon) => {
       setid(respon.data[0].id);
-      const stat = respon.data[0].status;
+      checkstatus(respon.data[0].status);
       setphoto(respon.data[0].imagearray);
     })
   }
@@ -44,7 +44,7 @@ const CompleteSurvey = () => {
     if(stat === "Section 3") {
       history.push(`/mail3/${url_mail}/${username}`)
     }
-    if(stat === "Section 1") {
+    if(stat === "Section 1"||stat === "Pending") {
       history.push(`/mail/${url_mail}/${username}`)
     }
   }

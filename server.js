@@ -210,18 +210,19 @@ console.log('Start SS')
   const devEnv=process.env.NODE_ENV !== "production";
   const {REACT_APP_DEV_URL,REACT_APP_PROD_URL} =process.env;
 
-  await axios.patch(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${id}`,{         
+   axios.patch(`${devEnv  ? REACT_APP_DEV_URL : REACT_APP_PROD_URL}/customer/${id}`,{         
     videourl:param4,
     status:"Section 3"
 })
   /* cropping face dari ss ffmpeg */
   for (let i = 1; i <=4; i++) {
     try {
-      res.header("Access-Control-Allow-Origin", "*")
-      res.redirect(req.originalUrl);
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Request-Method', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PATCH, DELETE, PUT');
+      res.setHeader('Access-Control-Allow-Headers', '*');
       const filename=  req.protocol + "://" + req.get("host") + "/customerPhoto/" + `${name}_${i}.png`;
-      await facecrop(filename, `./public/customerPhoto/${name}/${name}_final_${i}.jpg`, "image/jpeg", 1)  
-      
+      let wait= await facecrop(filename, `./public/customerPhoto/${name}/${name}_final_${i}.jpg`, "image/jpeg", 1).then(res.send({check:"ok"}))   
     } catch (error) {
       console.log("Faces Not Found")      
     }
@@ -318,11 +319,28 @@ app.post('/ocr',(req,res)=>{
       console.log('Job done');
       res.send({name:namesFound,country:countryName,date:dateFind})
     } catch (error) {
-     console.log(error) 
+       console.log(error) 
     }
     })();  
 })
 
+/* check file yang di crop */
+app.post('/checkfile',(req,res)=>{
+      res.header("Access-Control-Allow-Origin", "*");
+      const name=req.body.name
+      var dir = `public/customerPhoto/${name}/`;
+      console.log(dir);
+      const length = fs.readdirSync(dir).length;
+      console.log(length)
+      if(length!==0){
+        console.log("masuk")
+      res.send({check:"ok"});
+      }
+      else{
+      res.send({check:"Not Found"});
+    }
+  })
+  /*  */
 
 
 /* GABUNGIN EXPRESS SAMA JSON SERVER */
@@ -337,6 +355,7 @@ if (process.env.NODE_ENV === 'production') {
   }); 
 }
 /*  */
+
 
 app.use(cors())
 

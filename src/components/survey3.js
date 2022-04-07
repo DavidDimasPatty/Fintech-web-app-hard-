@@ -36,11 +36,11 @@ const Mail3 = () => {
   }, []);
   
   function checkstatus(stat) {
+    if(stat === "Section 1"||stat === "Pending") {
+      history.push(`/mail/${url_mail}/${username}`)
+    }
     if(stat === "Section 2") {
       history.push(`/mail2/${url_mail}/${username}`)
-    }
-    if(stat === "Section 1") {
-      history.push(`/mail/${url_mail}/${username}`)
     }
     if(stat === "Complete") {
       history.push(`/complete/${url_mail}/${username}`)
@@ -75,8 +75,7 @@ const Mail3 = () => {
     .then((respon) => {
       setid(respon.data[0].id);
       const stat = respon.data[0].status;
-      const video = respon.data[0].videourl;
-      setvideo(video, respon.data[0].filename)
+      checkstatus(respon.data[0].status)
     })
   }
   /*  */
